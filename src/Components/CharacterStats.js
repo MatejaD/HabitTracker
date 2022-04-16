@@ -6,12 +6,20 @@ import { AiFillHeart, AiFillStar } from 'react-icons/ai'
 import { IoFastFoodOutline } from 'react-icons/io5'
 import { FaDrumstickBite } from 'react-icons/fa'
 
-export default function CharacterStats() {
-    return (
-        <div className="flex items-center justify-center gap-4 w-full h-2/5 border-4 bg-gray-300 border-gray-500">
+// Redux
+import { useSelector } from 'react-redux'
 
-            <div className="flex flex-col text-center justify-center text-xl">
-                <h2>Mateja</h2>
+export default function CharacterStats() {
+
+
+    const name = useSelector(state => state.name)
+
+
+    return (
+        <div className="flex items-center justify-center gap-4 w-5/6 h-2/5 border-4 bg-gray-300 border-gray-500">
+
+            <div className="flex flex-col text-center justify-center text-xl overflow-hidden">
+                <h2 className=" w-full h-8 mb-0 px-2">{name}</h2>
                 <img className="w-44
             " src={character} alt="" />
             </div>
