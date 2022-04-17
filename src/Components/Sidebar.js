@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { GrHomeRounded } from 'react-icons/gr'
 import { BsCalendarCheck, BsShop, BsCoin, BsArrowReturnRight, BsArrowReturnLeft } from 'react-icons/bs'
 import { GoPackage } from 'react-icons/go'
+import Overlay from "./Overlay";
 export default function Sidebar() {
 
     const [isOpen, setIsOpen] = useState(false)
@@ -52,9 +53,7 @@ export default function Sidebar() {
 
             </nav>
             {isOpen ?
-                <div className="absolute w-screen h-screen bg-black opacity-50 ">
-
-                </div>
+              <Overlay/>
 
                 : ""}
         </>
