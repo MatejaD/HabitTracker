@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import character from '../Images/ch.png'
 
 // Icons
@@ -12,7 +12,21 @@ import { useSelector } from 'react-redux'
 export default function CharacterStats() {
 
 
+
+    const returnPercentage = (value, maxValue) => {
+        return (value / maxValue) * 100
+    }
+
     const name = useSelector(state => state.name)
+    const health = useSelector(state => state.characterStats[0].health)
+    const maxHealth = useSelector(state => state.characterStats[0].maxHealth)
+
+    const hunger = useSelector(state => state.characterStats[1].hunger)
+    const maxHunger = useSelector(state => state.characterStats[1].maxHunger)
+
+    const experience = useSelector(state => state.characterStats[2].experience)
+    const maxExperience = useSelector(state => state.characterStats[2].maxExperience)
+
 
 
     return (
@@ -31,37 +45,65 @@ export default function CharacterStats() {
                     <div className="flex justify-center  items-center w-5/6 h-1/2">
 
                         {/* HEALTH BAR */}
-                        <div className="w-5/6 h-full rounded-md border-2 bg-red-600 border-black">
+                        <div className="relative flex  justify-start items-center w-5/6 h-full rounded-md bg-slate-500">
+                            <div style={{ width: `${returnPercentage(health, maxHealth)}%` }} className={` h-full p-2  border-red-700 rounded-md bg-red-700`}>
 
+                            </div>
                         </div>
+
 
                     </div>
                     {/* PERCENTAGE */}
-                    <span className="w-12 text-center">50/50</span>
+                    <div className="w-12 " >
+                        <span className="w-12 text-center">{health}</span>
+                        <span className="w-12 text-center">/</span>
+
+                        <span className="w-12 text-center">{maxHealth}</span>
+
+                    </div>
                 </div>
 
                 <div className="flex items-center justify-around w-full h-10 px-2 ">
                     <span className="text-3xl text-red-600"><IoFastFoodOutline /></span>
                     <div className="flex justify-center  items-center w-5/6 h-1/2">
-                        <div className="w-5/6 h-full rounded-md border-2 bg-yellow-600 border-black">
+                        {/* HUNGER BAR */}
+                        <div className="relative flex   justify-start items-center w-5/6 h-full rounded-md bg-slate-500">
+                            <div style={{ width: `${returnPercentage(hunger, maxHunger)}%` }} className={` h-full  rounded-md bg-orange-500`}>
 
+                            </div>
                         </div>
 
                     </div>
-                    <span className="w-12 text-center">50/50</span>
+
+                    {/* PERCENTAGE */}
+                    <div className="w-12 " >
+                        <span className="w-12 text-center">{hunger}</span>
+                        <span className="w-12 text-center">/</span>
+
+                        <span className="w-12 text-center">{maxHunger}</span>
+
+                    </div>
 
                 </div>
 
 
                 <div className="flex items-center justify-around w-full h-10 px-2 ">
-                    <span className="text-3xl text-yellow-600"><AiFillStar /></span>
+                    <span className="text-3xl text-yellow-400"><AiFillStar /></span>
                     <div className="flex justify-center  items-center w-5/6 h-1/2">
-                        <div className="w-5/6 h-full rounded-md bg-yellow-300 border-2 border-black">
+                        <div className="relative flex   justify-start items-center w-5/6 h-full rounded-md bg-slate-500">
+                            <div style={{ width: `${returnPercentage(experience, maxExperience)}%` }} className={` h-full  rounded-md bg-yellow-500`}>
 
+                            </div>
                         </div>
 
                     </div>
-                    <span className="w-12 text-center">50/50</span>
+                    <div className="w-12 " >
+                        <span className="w-12 text-center">{experience}</span>
+                        <span className="w-12 text-center">/</span>
+
+                        <span className="w-12 text-center">{maxExperience}</span>
+
+                    </div>
 
                 </div>
 
