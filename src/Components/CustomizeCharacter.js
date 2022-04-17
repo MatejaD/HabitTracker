@@ -7,13 +7,13 @@ import shield2 from '../Images/shield2.png'
 import hat3 from '../Images/hat4.png'
 
 // Redux
-import {useSelector,useDispatch} from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
 import { CLOSE_CUSTOMIZE_CHARACTER } from "../Redux/actions";
 
 export default function CustomizeCharacter() {
 
 
-    const customizeCharacter = useSelector (state=> state.customizeCharacter)
+    const customizeCharacter = useSelector(state => state.customizeCharacter)
     const dispatch = useDispatch()
     const handleSubmit = (e) => {
         e.preventDefault()
@@ -23,9 +23,9 @@ export default function CustomizeCharacter() {
         <>
             <form
                 onSubmit={handleSubmit}
-                className={`flex flex-col justify-top items-center absolute t-5 left-auto w-11/12 h-5/6  z-30 bg-slate-100 border-2 border-black`}>
+                className={`flex flex-col justify-top items-center absolute t-5 left-auto w-11/12 h-5/6  z-50 bg-slate-100 border-2 border-black`}>
                 <button className="absolute right-8 top-4 w-24 h-8 rounded-md bg-blue-500"
-                onClick={() => dispatch({type:CLOSE_CUSTOMIZE_CHARACTER})}
+                    onClick={() => dispatch({ type: CLOSE_CUSTOMIZE_CHARACTER })}
                 >Confirm</button>
                 <div className="relative flex justify-center items-center w-36 h-1/3 ">
                     <img className="w-32" src={character} alt="" />
@@ -47,7 +47,7 @@ export default function CustomizeCharacter() {
                     </div>
                 </div>
             </form>
-            <div className="w-screen h-screen absolute bg-green-600 z-20">
+            <div className="w-screen h-screen absolute bg-green-600 z-40">
                 <Overlay />
 
             </div>

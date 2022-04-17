@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import Overlay from "./Overlay";
 // Redux
 import { useSelector, useDispatch } from 'react-redux'
-import { CLOSE_MODAL, OPEN_MODAL, CHANGE_NAME,OPEN_CUSTOMIZE_CHARACTER } from "../Redux/actions";
+import { CLOSE_MODAL, OPEN_MODAL, CHANGE_NAME, OPEN_CUSTOMIZE_CHARACTER } from "../Redux/actions";
 
 const Modal = () => {
 
@@ -25,7 +25,7 @@ const Modal = () => {
             dispatch({ type: OPEN_MODAL })
         }
         else {
-            dispatch({type:OPEN_CUSTOMIZE_CHARACTER})
+            dispatch({ type: OPEN_CUSTOMIZE_CHARACTER })
             dispatch({ type: CLOSE_MODAL })
             dispatch({ type: CHANGE_NAME, payload: nameValue })
 
@@ -44,7 +44,7 @@ const Modal = () => {
         <>
             <form
                 onSubmit={handleSubmit}
-                className={`flex flex-col justify-around items-center absolute t-5 left-auto w-2/3 h-2/3  z-30 bg-slate-100 border-2 border-black ${errorMsg ? ' border-red-800 ' : ''} `}>
+                className={`flex flex-col justify-around items-center absolute t-5 left-auto w-2/3 h-2/3  z-50 bg-slate-100 border-2 border-black ${errorMsg ? ' border-red-800 ' : ''} `}>
                 <div className="flex flex-col gap-4 text-center">
                     <h1 className="w-72 text-xl ">Welcome to Husterious,mysterious traveler! State your name.</h1>
                     <p className="w-64 text-gray-600 text-sm">Name can be changed later in the settings menu.</p>
@@ -65,7 +65,7 @@ const Modal = () => {
 
                 </div>
             </form>
-            <div className="w-screen h-screen absolute bg-green-600 z-20">
+            <div className="w-screen h-screen absolute bg-green-600 z-40">
                 <Overlay />
 
             </div>

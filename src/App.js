@@ -7,6 +7,11 @@ import Modal from './Components/Modal';
 import { useSelector, useDispatch } from 'react-redux'
 import { OPEN_MODAL } from './Redux/actions';
 import CustomizeCharacter from './Components/CustomizeCharacter';
+// Router
+import { BrowserRouter, Route, Routes } from 'react-router-dom'
+import Calendar from './Components/Calendar';
+import MainPage from './Components/MainPage';
+
 
 
 function App() {
@@ -38,35 +43,22 @@ function App() {
   checkSession();
 
   return (
-    <main className="relative w-screen h-screen flex justify-center items-center bg-green-500">
-
-
-      {
-        modal ? <Modal /> : ''
-      }
-
-      {
-        customizeCharacter ? <CustomizeCharacter /> : ''
-      }
-
-
+    <main className="relative font-body w-screen min-h-screen h-screen flex justify-center items-center bg-green-400">
       <Sidebar />
-      <article className='w-11/12 ml-12 flex justify-around   h-screen p-4 '>
+      <Routes>
 
-        <div className='h-full w-1/2 '>
-          <CharacterStats />
+        {
+          modal ? <Route path='/' element={<Modal />} /> : ''
+        }
 
+        {
+          customizeCharacter ? <Route path='/' element={<CustomizeCharacter />} /> : ''
+        }
 
-          <div>
+        <Route path='/' element={<MainPage />} />
 
-          </div>
-        </div>
-
-        <div className='h-full w-1/2 '>
-
-
-        </div>
-      </article>
+        <Route path='/calendar' element={<Calendar />} />
+      </Routes>
     </main>
   );
 }
