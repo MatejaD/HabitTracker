@@ -63,10 +63,14 @@ export default function Sidebar() {
                 <div className=" w-1/2 h-4/5  flex gap-8">
                     <div className="relative h-3/5 w-8  flex items-right px-2 justify-between flex-col  py-2 border-black">
                         {icons.map((singleIcon) => {
-                            return (<button onClick={() => setIsOpen(false)}>
-                                <Link to={singleIcon.navigate}>
+                            return (<button onClick={() => {
+                                setIsOpen(false)
+                                navigate(`${singleIcon.navigate}`, { replace: true })
+                                navigate(0)
+                            }}>
+                                <h2>
                                     {singleIcon.icon}
-                                </Link>
+                                </h2>
                             </button>
                             )
 
@@ -86,15 +90,17 @@ export default function Sidebar() {
             </div> */}
 
             </nav>
-            {isOpen ?
-                <div
-                    onClick={() => setIsOpen(false)}
-                    className="w-screen h-screen absolute z-20">
-                    <Overlay />
-                </div>
+            {
+                isOpen ?
+                    <div
+                        onClick={() => setIsOpen(false)}
+                        className="w-screen h-screen fixed z-20">
+                        <Overlay />
+                    </div>
 
 
-                : ""}
+                    : ""
+            }
         </>
     )
 }

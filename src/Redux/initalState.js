@@ -4,6 +4,10 @@ const initalState = {
     name: 'skrpa',
     modal: false,
     customizeCharacter: false,
+    To_Do_Input_Value: '',
+    To_Do_List: [
+
+    ],
     characterStats: [
         {
             health: 50,
@@ -19,7 +23,7 @@ const initalState = {
             experience: 0,
             maxExperience: 50,
         },
-    ]
+    ],
 
 
 }

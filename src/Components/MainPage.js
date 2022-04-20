@@ -4,10 +4,9 @@ import RightSide from "./RightSide";
 
 export default function MainPage() {
     return (
-        <article className='w-11/12 ml-12 flex justify-around   h-screen p-4 '>
+        <article className='w-full bg-blue-500   flex flex-col justify-center gap-4 items-center min-h-screen p-4  '>
             <LeftSide />
             <RightSide />
-
         </article>
     )
 }

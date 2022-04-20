@@ -1,16 +1,18 @@
 // Components 
 import Sidebar from './Components/Sidebar';
 import CharacterStats from './Components/CharacterStats';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Modal from './Components/Modal';
 // Redux
 import { useSelector, useDispatch } from 'react-redux'
 import { OPEN_MODAL } from './Redux/actions';
 import CustomizeCharacter from './Components/CustomizeCharacter';
 // Router
+import { useLocation } from 'react-router-dom';
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
-import Calendar from './Components/Calendar';
 import MainPage from './Components/MainPage';
+import CalendarPage from './Components/CalendarPage';
+
 
 
 
@@ -43,26 +45,51 @@ function App() {
   checkSession();
 
   return (
-    <main className="relative font-body w-screen min-h-screen h-screen flex justify-center items-center bg-green-400">
+    <main className="relative font-body w-screen min-h-screen   flex justify-center items-center bg-green-400">
       <Sidebar />
-      <Routes>
 
-        {
-          modal ? <Route path='/' element={<Modal />} /> : ''
-        }
+      {
+        modal ? <Route path='/' element={<Modal />} /> : ''
+      }
 
-        {
-          customizeCharacter ? <Route path='/' element={<CustomizeCharacter />} /> : ''
-        }
+      {
+        customizeCharacter ? <Route path='/' element={<CustomizeCharacter />} /> : ''
+      }
 
-        <Route path='/' element={<MainPage />} />
+      <Content />
 
-        <Route path='/calendar' element={<Calendar />} />
-      </Routes>
     </main>
   );
 }
 
+
+function Content() {
+  const location = useLocation();
+
+  const [displayLocation, setDisplayLocation] = useState(location);
+  const [transitionStage, setTransistionStage] = useState("fadeIn");
+
+  useEffect(() => {
+    if (location !== displayLocation) setTransistionStage("fadeOut");
+  }, [location, displayLocation]);
+
+  return (
+    <div
+      className={`${transitionStage}flex flex-col items-start justify-start w-full ml-2 min-h-screen h-screen`}
+      onAnimationEnd={() => {
+        if (transitionStage === "fadeOut") {
+          setTransistionStage("fadeIn");
+          setDisplayLocation(location);
+        }
+      }}
+    >
+      <Routes location={displayLocation}>
+        <Route path='/calendar' element={<CalendarPage />} />
+        <Route path='/' element={<MainPage />} />
+      </Routes>
+    </div>
+  );
+}
 
 
 export default (App);
