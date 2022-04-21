@@ -9,8 +9,8 @@ import reducer from './Redux/reducer';
 import initalState from './Redux/initalState';
 import { BrowserRouter } from 'react-router-dom'
 
-const store = createStore(reducer, initalState)
 
+const store = createStore(reducer, initalState)
 ReactDOM.render(
   <Provider store={store}>
     <React.StrictMode>

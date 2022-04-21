@@ -1,7 +1,7 @@
 // Components 
 import Sidebar from './Components/Sidebar';
 import CharacterStats from './Components/CharacterStats';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import Modal from './Components/Modal';
 // Redux
 import { useSelector, useDispatch } from 'react-redux'
@@ -12,11 +12,16 @@ import { useLocation } from 'react-router-dom';
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import MainPage from './Components/MainPage';
 import CalendarPage from './Components/CalendarPage';
+// Icons
+import { AiFillHeart, AiFillStar } from 'react-icons/ai'
+
 
 
 
 
 function App() {
+
+
 
   const modal = useSelector(state => state.modal)
   const customizeCharacter = useSelector(state => state.customizeCharacter)
@@ -73,9 +78,30 @@ function Content() {
     if (location !== displayLocation) setTransistionStage("fadeOut");
   }, [location, displayLocation]);
 
+  // NOTIFICATION FOR EXPERIENCE AFTER COMPLETING A TO-DO
+  const experience = useSelector(state => state.characterStats[2].experience)
+  const [notification, setNotification] = useState(false)
+  const firstUpdate = useRef(true);
+
+
+  useEffect(() => {
+    if (firstUpdate.current) {
+      firstUpdate.current = false;
+      return;
+    }
+    else {
+      setNotification(true)
+
+      let timeout = setTimeout(() => {
+        setNotification(false)
+      }, 3000);
+      return () => clearTimeout(timeout)
+    }
+  }, [experience])
+
   return (
     <div
-      className={`${transitionStage}flex flex-col items-start justify-start w-full ml-2 min-h-screen h-screen`}
+      className={`${transitionStage}flex relative flex-col items-start justify-start w-full ml-2 min-h-screen h-screen`}
       onAnimationEnd={() => {
         if (transitionStage === "fadeOut") {
           setTransistionStage("fadeIn");
@@ -83,6 +109,11 @@ function Content() {
         }
       }}
     >
+      <div className={`flex justify-evenly items-center rounded-sm absolute top-3 right-5 w-48 h-16 bg-green-500 border ${notification ? 'pop-down' : 'pop-up'}`}>
+        <h2>+ 1.3 Experience</h2>
+        <span className='text-yellow-400 text-3xl '><AiFillStar /></span>
+      </div>
+
       <Routes location={displayLocation}>
         <Route path='/calendar' element={<CalendarPage />} />
         <Route path='/' element={<MainPage />} />

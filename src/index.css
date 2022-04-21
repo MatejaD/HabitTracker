@@ -42,6 +42,37 @@ body{
 }
 
 
+.overflow-wrap{
+    overflow-wrap: break-word;
+}
+
+.check{
+    visibility: hidden;
+}
+
+.check-container:hover .check{
+    visibility: visible;
+
+}
+
+
 ::placeholder{
     font-size: 1.1rem;
+}
+
+.pop-up{
+    display:none ;
+   transition-property: ease-in-out;
+   transition-duration: 2s;
+}
+
+@keyframes notification {
+   
+}
+
+.pop-down {
+    display: flex;
+   transition-property: ease-in-out;
+
+transition-duration: 2s;
 }
