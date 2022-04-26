@@ -5,43 +5,35 @@ import { GoPackage } from 'react-icons/go'
 import Overlay from "./Overlay";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
 export default function Sidebar() {
 
     const [isOpen, setIsOpen] = useState(false)
     const navigate = useNavigate()
 
+    const coins = useSelector(state => state.coins)
+
     const icons = [
         {
             icon: < GrHomeRounded />,
-            navigate: '/'
-
-
-
+            navigate: '/',
+            id: 1,
         },
         {
             icon: <BsCalendarCheck />,
-            navigate: '/calendar'
-
-
-
-
+            navigate: '/calendar',
+            id: 2,
         },
         {
             icon: <BsShop />,
-            navigate: '/'
-
-
-
+            navigate: '/',
+            id: 3,
         },
         {
             icon: <GoPackage />,
-            navigate: '/'
-
-
-
-
+            navigate: '/',
+            id: 4,
         },
-        // <BsCoin/>,
     ]
 
     const tags = [
@@ -60,26 +52,33 @@ export default function Sidebar() {
                     onClick={() => setIsOpen(!isOpen)}>
                     {isOpen ? <BsArrowReturnLeft /> : <BsArrowReturnRight />}
                 </button>
-                <div className=" w-1/2 h-4/5  flex gap-8">
+                <div className=" w-1/2 h-4/5 relative flex gap-8">
                     <div className="relative h-3/5 w-8  flex items-right px-2 justify-between flex-col  py-2 border-black">
                         {icons.map((singleIcon) => {
-                            return (<button onClick={() => {
+                            return (<button key={singleIcon.id} onClick={() => {
                                 setIsOpen(false)
                                 navigate(`${singleIcon.navigate}`, { replace: true })
                                 navigate(0)
                             }}>
-                                <h2>
+                                <h2 >
                                     {singleIcon.icon}
                                 </h2>
                             </button>
                             )
 
                         })}
+
+
                     </div>
+                    <div className={`flex h-16  c absolute bottom-5 ${isOpen ? 'w-36 flex-row justify-start gap-3 pl-2 items-center duration-200 ' : 'justify-center items-center flex-col w-10'}`}>
+                        <span className=""><BsCoin /></span>
+                        <p className="text-lg">{coins}$</p>
+                    </div>
+
                     {isOpen ?
                         <div className="w-full text-xl  h-3/5 flex items-right justify-between py-2.5 flex-col">
                             {tags.map((tag) => {
-                                return <h2>{tag}</h2>
+                                return <h2 key={tag}>{tag}</h2>
                             })}
                         </div>
 

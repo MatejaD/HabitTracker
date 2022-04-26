@@ -4,8 +4,21 @@ const initalState = {
     name: 'skrpa',
     modal: false,
     customizeCharacter: false,
+    notifications: [],
+    // To_Do
     To_Do_Input_Value: '',
     To_Do_List: [
+
+    ],
+    // Daily_Task
+    Daily_Task_Input_Value: '',
+    Daily_Task_List: [
+
+    ],
+
+    // Habit
+    Habit_Input_Value: '',
+    Habit_List: [
 
     ],
     characterStats: [
@@ -21,9 +34,14 @@ const initalState = {
 
         {
             experience: 0,
-            maxExperience: 50,
+            maxExperience: 200,
         },
+        {
+            level: 1
+        }
+        
     ],
+    coins:0.00
 
 
 }

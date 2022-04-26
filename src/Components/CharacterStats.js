@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import character from '../Images/ch.png'
 
 // Icons
@@ -7,11 +7,13 @@ import { IoFastFoodOutline } from 'react-icons/io5'
 import { FaDrumstickBite } from 'react-icons/fa'
 
 // Redux
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
+import { LEVEL_UP } from "../Redux/actions";
 
 export default function CharacterStats() {
 
 
+    const dispatch = useDispatch()
 
     const returnPercentage = (value, maxValue) => {
         return (value / maxValue) * 100
@@ -27,10 +29,18 @@ export default function CharacterStats() {
     const experience = useSelector(state => state.characterStats[2].experience)
     const maxExperience = useSelector(state => state.characterStats[2].maxExperience)
 
+    const level = useSelector(state => state.characterStats[3].level)
+
+    useEffect(() =>{
+        dispatch({type:LEVEL_UP})
+    },[experience])
+
 
 
     return (
-        <div className="flex  items-center justify-center gap-4 w-5/6 h-2/5 border-4 bg-gray-300 border-gray-500">
+        <div className="flex relative items-center justify-center  gap-4 w-5/6 h-2/5 border-4 bg-gray-300 border-gray-500">
+
+            <span className="absolute top-2 right-4 text-lg">Lvl {level}</span>
 
             <div className="flex flex-col text-center justify-center text-xl overflow-hidden">
                 <h2 className=" w-full h-8 mb-0 px-2">{name}</h2>
@@ -98,7 +108,7 @@ export default function CharacterStats() {
 
                     </div>
                     <div className="w-12 " >
-                        <span className="w-12 text-center">{experience}</span>
+                        <span className="w-12 text-center">{(experience)}</span>
                         <span className="w-12 text-center">/</span>
 
                         <span className="w-12 text-center">{maxExperience}</span>

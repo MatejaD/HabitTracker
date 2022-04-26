@@ -5,7 +5,7 @@ import { useState, useEffect, useRef } from 'react';
 import Modal from './Components/Modal';
 // Redux
 import { useSelector, useDispatch } from 'react-redux'
-import { OPEN_MODAL } from './Redux/actions';
+import { OPEN_MODAL, REMOVE_NOTIFICATION } from './Redux/actions';
 import CustomizeCharacter from './Components/CustomizeCharacter';
 // Router
 import { useLocation } from 'react-router-dom';
@@ -14,6 +14,7 @@ import MainPage from './Components/MainPage';
 import CalendarPage from './Components/CalendarPage';
 // Icons
 import { AiFillHeart, AiFillStar } from 'react-icons/ai'
+import { BsCoin } from 'react-icons/bs'
 
 
 
@@ -74,14 +75,24 @@ function Content() {
   const [displayLocation, setDisplayLocation] = useState(location);
   const [transitionStage, setTransistionStage] = useState("fadeIn");
 
+  const To_Do_List = useSelector(state => state.To_Do_List)
+
+
   useEffect(() => {
     if (location !== displayLocation) setTransistionStage("fadeOut");
   }, [location, displayLocation]);
 
   // NOTIFICATION FOR EXPERIENCE AFTER COMPLETING A TO-DO
   const experience = useSelector(state => state.characterStats[2].experience)
+  const notifcationArray = useSelector(state => state.notifications)
   const [notification, setNotification] = useState(false)
   const firstUpdate = useRef(true);
+
+  const dispatch = useDispatch()
+
+  let array = [1, 2, 3]
+
+
 
 
   useEffect(() => {
@@ -90,14 +101,13 @@ function Content() {
       return;
     }
     else {
-      setNotification(true)
 
-      let timeout = setTimeout(() => {
-        setNotification(false)
-      }, 3000);
-      return () => clearTimeout(timeout)
+      let timeout = setInterval(() => {
+        dispatch({ type: REMOVE_NOTIFICATION })
+      }, 1500);
+      return () => clearInterval(timeout)
     }
-  }, [experience])
+  }, [notifcationArray])
 
   return (
     <div
@@ -109,16 +119,35 @@ function Content() {
         }
       }}
     >
-      <div className={`flex justify-evenly items-center rounded-sm absolute top-3 right-5 w-48 h-16 bg-green-500 border ${notification ? 'pop-down' : 'pop-up'}`}>
-        <h2>+ 1.3 Experience</h2>
-        <span className='text-yellow-400 text-3xl '><AiFillStar /></span>
+      <div className='fixed top-3 right-5 w-48 min-h-16 z-10 flex flex-col gap-2'>
+        {/* Map through the array of notifications */}
+        {notifcationArray.map((notificationn) => {
+          if (notificationn === 'experience') {
+            return (
+              <div className={`flex justify-between px-2 items-center rounded-sm  z-10  w-48 h-10 bg-green-500 border-green-300 border  ${notificationn ? 'pop-down' : 'pop-up'}`}>
+                <h2>+ 3 Experience</h2>
+                <span className='text-yellow-400 text-3xl '><AiFillStar /></span>
+              </div>
+            )
+          }
+          else if (notificationn === 'coins') {
+            return (
+              <div className={`flex justify-between px-2 items-center rounded-sm  z-10  w-48 h-10 bg-green-500 border-green-300 border  ${notificationn ? 'pop-down' : 'pop-up'}`}>
+                <h2>+ 0.4 Coins</h2>
+                <span className='text-yellow-400 text-3xl '><BsCoin /></span>
+              </div>
+            )
+          }
+        })}
+
       </div>
+
 
       <Routes location={displayLocation}>
         <Route path='/calendar' element={<CalendarPage />} />
         <Route path='/' element={<MainPage />} />
       </Routes>
-    </div>
+    </div >
   );
 }
 
