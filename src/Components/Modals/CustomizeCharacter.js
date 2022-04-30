@@ -1,14 +1,14 @@
 import React from "react";
-import Overlay from "./Overlay";
+import Overlay from "../Overlay";
 // Character
-import character from '../Images/ch.png'
-import shield1 from '../Images/shield.png'
-import shield2 from '../Images/shield2.png'
-import hat3 from '../Images/hat4.png'
+import character from '../../Images/ch.png'
+import shield1 from '../../Images/shield.png'
+import shield2 from '../../Images/shield2.png'
+import hat3 from '../../Images/hat4.png'
 
 // Redux
 import { useSelector, useDispatch } from 'react-redux'
-import { CLOSE_CUSTOMIZE_CHARACTER } from "../Redux/actions";
+import { CLOSE_CUSTOMIZE_CHARACTER } from "../../Redux/actions";
 
 export default function CustomizeCharacter() {
 

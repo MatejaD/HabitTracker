@@ -31,19 +31,19 @@ export default function CharacterStats() {
 
     const level = useSelector(state => state.characterStats[3].level)
 
-    useEffect(() =>{
-        dispatch({type:LEVEL_UP})
-    },[experience])
+    useEffect(() => {
+        dispatch({ type: LEVEL_UP })
+    }, [experience])
 
 
 
     return (
-        <div className="flex relative items-center justify-center  gap-4 w-5/6 h-2/5 border-4 bg-gray-300 border-gray-500">
+        <div className="flex relative items-center justify-center  gap-2 w-5/6 h-2/5 border-2 bg-slate-200 border-gray-800 rounded-md">
 
             <span className="absolute top-2 right-4 text-lg">Lvl {level}</span>
 
-            <div className="flex flex-col text-center justify-center text-xl overflow-hidden">
-                <h2 className=" w-full h-8 mb-0 px-2">{name}</h2>
+            <div className="flex flex-col text-center justify-center items-center text-xl overflow-hidden">
+                <h2 className=" w-full py-4 h-8  px-4">{name}</h2>
                 <img className="w-44
             " src={character} alt="" />
             </div>
@@ -65,7 +65,7 @@ export default function CharacterStats() {
                     </div>
                     {/* PERCENTAGE */}
                     <div className="w-12 " >
-                        <span className="w-12 text-center">{health}</span>
+                        <span className="w-12 text-center">{health.toFixed()}</span>
                         <span className="w-12 text-center">/</span>
 
                         <span className="w-12 text-center">{maxHealth}</span>

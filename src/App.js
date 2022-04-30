@@ -2,11 +2,12 @@
 import Sidebar from './Components/Sidebar';
 import CharacterStats from './Components/CharacterStats';
 import { useState, useEffect, useRef } from 'react';
-import Modal from './Components/Modal';
+import Modal from './Components/Modals/Modal';
+import CustomizeCharacter from './Components/Modals/CustomizeCharacter';
+import LvlUpModul from './Components/Modals/LvlUpModul';
 // Redux
 import { useSelector, useDispatch } from 'react-redux'
-import { OPEN_MODAL, REMOVE_NOTIFICATION } from './Redux/actions';
-import CustomizeCharacter from './Components/CustomizeCharacter';
+import { OPEN_LVL_MODAL, OPEN_MODAL, OPEN_NO_HEALTH_MODAL, REMOVE_NOTIFICATION } from './Redux/actions';
 // Router
 import { useLocation } from 'react-router-dom';
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
@@ -14,8 +15,8 @@ import MainPage from './Components/MainPage';
 import CalendarPage from './Components/CalendarPage';
 // Icons
 import { AiFillHeart, AiFillStar } from 'react-icons/ai'
-import { BsCoin } from 'react-icons/bs'
-
+import { BsCoin, BsHeartFill } from 'react-icons/bs'
+import NoHealthModal from './Components/Modals/NoHealthModal';
 
 
 
@@ -23,9 +24,18 @@ import { BsCoin } from 'react-icons/bs'
 function App() {
 
 
-
+  // MODALS
   const modal = useSelector(state => state.modal)
   const customizeCharacter = useSelector(state => state.customizeCharacter)
+  const lvlUpModal = useSelector(state => state.lvlUpModal)
+  const noHealthModal = useSelector(state => state.noHealthModal)
+  // EXP
+  const experience = useSelector(state => state.characterStats[2].experience)
+  const maxExperience = useSelector(state => state.characterStats[2].maxExperience)
+  // HEALTH
+  const health = useSelector(state => state.characterStats[0].health)
+  const maxHealth = useSelector(state => state.characterStats[0].maxHealth)
+
   const dispatch = useDispatch()
 
 
@@ -50,6 +60,19 @@ function App() {
   }
   checkSession();
 
+  useEffect(() => {
+    if (experience >= maxExperience) {
+      dispatch({ type: OPEN_LVL_MODAL })
+
+    }
+  }, [experience])
+
+  useEffect(() => {
+    if (health <= 0) {
+      dispatch({ type: OPEN_NO_HEALTH_MODAL })
+    }
+  }, [health])
+
   return (
     <main className="relative font-body w-screen min-h-screen   flex justify-center items-center bg-green-400">
       <Sidebar />
@@ -60,6 +83,13 @@ function App() {
 
       {
         customizeCharacter ? <Route path='/' element={<CustomizeCharacter />} /> : ''
+      }
+      {
+        lvlUpModal ? <LvlUpModul /> : ''
+      }
+      {
+        noHealthModal ? <NoHealthModal /> : ''
+
       }
 
       <Content />
@@ -84,7 +114,7 @@ function Content() {
 
   // NOTIFICATION FOR EXPERIENCE AFTER COMPLETING A TO-DO
   const experience = useSelector(state => state.characterStats[2].experience)
-  const notifcationArray = useSelector(state => state.notifications)
+  const notifcations = useSelector(state => state.notifications)
   const [notification, setNotification] = useState(false)
   const firstUpdate = useRef(true);
 
@@ -93,6 +123,7 @@ function Content() {
   let array = [1, 2, 3]
 
 
+  let notificationArray = notifcations.slice(0, 6)
 
 
   useEffect(() => {
@@ -101,13 +132,25 @@ function Content() {
       return;
     }
     else {
+      if (notifcations.length < 8) {
+        let timeout = setInterval(() => {
+          dispatch({ type: REMOVE_NOTIFICATION })
+        }, 700);
+        return () => clearInterval(timeout)
 
-      let timeout = setInterval(() => {
-        dispatch({ type: REMOVE_NOTIFICATION })
-      }, 1500);
-      return () => clearInterval(timeout)
+      }
+
+      if (notifcations.length >= 8) {
+        let timeout = setInterval(() => {
+
+          dispatch({ type: REMOVE_NOTIFICATION })
+        }, 100);
+        return () => clearInterval(timeout)
+
+      }
+
     }
-  }, [notifcationArray])
+  }, [notificationArray])
 
   return (
     <div
@@ -121,23 +164,34 @@ function Content() {
     >
       <div className='fixed top-3 right-5 w-48 min-h-16 z-10 flex flex-col gap-2'>
         {/* Map through the array of notifications */}
-        {notifcationArray.map((notificationn) => {
-          if (notificationn === 'experience') {
+        {notificationArray.map((notificationn) => {
+          console.log(notificationn)
+          if (notificationn.exp === 'experience') {
             return (
               <div className={`flex justify-between px-2 items-center rounded-sm  z-10  w-48 h-10 bg-green-500 border-green-300 border  ${notificationn ? 'pop-down' : 'pop-up'}`}>
-                <h2>+ 3 Experience</h2>
+                <h2>+ {(notificationn.amount).toFixed(2)} Experience</h2>
                 <span className='text-yellow-400 text-3xl '><AiFillStar /></span>
               </div>
             )
           }
-          else if (notificationn === 'coins') {
+          else if (notificationn.coins === 'coins') {
             return (
               <div className={`flex justify-between px-2 items-center rounded-sm  z-10  w-48 h-10 bg-green-500 border-green-300 border  ${notificationn ? 'pop-down' : 'pop-up'}`}>
-                <h2>+ 0.4 Coins</h2>
+                <h2>+ {(notificationn.amount).toFixed(2)} Coins</h2>
                 <span className='text-yellow-400 text-3xl '><BsCoin /></span>
               </div>
             )
           }
+          else if (notificationn.health === 'health') {
+            return (
+              <div className={`flex justify-between px-2 items-center rounded-sm  z-10  w-48 h-10 bg-red-500 border-red-400 border  ${notificationn ? 'pop-down' : 'pop-up'}`}>
+                <h2>- {(notificationn.amount).toFixed(2)} Health</h2>
+                <span className='text-red-700 text-3xl '><BsHeartFill /></span>
+              </div>
+            )
+
+          }
+
         })}
 
       </div>

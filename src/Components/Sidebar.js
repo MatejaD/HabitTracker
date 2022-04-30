@@ -70,7 +70,7 @@ export default function Sidebar() {
 
 
                     </div>
-                    <div className={`flex h-16  c absolute bottom-5 ${isOpen ? 'w-36 flex-row justify-start gap-3 pl-2 items-center duration-200 ' : 'justify-center items-center flex-col w-10'}`}>
+                    <div className={`flex h-16 left-1 absolute bottom-5 ${isOpen ? 'w-36 flex-row justify-start gap-3 pl-2 items-center duration-200 ' : 'justify-center items-center flex-col w-10'}`}>
                         <span className=""><BsCoin /></span>
                         <p className="text-lg">{coins}$</p>
                     </div>

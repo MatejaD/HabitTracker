@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
-import Overlay from "./Overlay";
+import Overlay from "../Overlay";
 // Redux
 import { useSelector, useDispatch } from 'react-redux'
-import { CLOSE_MODAL, OPEN_MODAL, CHANGE_NAME, OPEN_CUSTOMIZE_CHARACTER } from "../Redux/actions";
+import { CLOSE_MODAL, OPEN_MODAL, CHANGE_NAME, OPEN_CUSTOMIZE_CHARACTER } from "../../Redux/actions";
 
 const Modal = () => {
 

@@ -4,6 +4,9 @@ const initalState = {
     name: 'skrpa',
     modal: false,
     customizeCharacter: false,
+    lvlUpModal: false,
+    noHealthModal: false,
+
     notifications: [],
     // To_Do
     To_Do_Input_Value: '',
@@ -39,9 +42,9 @@ const initalState = {
         {
             level: 1
         }
-        
+
     ],
-    coins:0.00
+    coins: 0.00
 
 
 }
