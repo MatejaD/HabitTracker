@@ -1,5 +1,5 @@
 import { act } from "react-dom/test-utils"
-import { OPEN_MODAL, CLOSE_MODAL, CHANGE_NAME, OPEN_CUSTOMIZE_CHARACTER, CLOSE_CUSTOMIZE_CHARACTER, ADD_TO_LIST, SET_TO_DO_VALUE, REMOVE_TO_DO_ITEM, INCREASE_EXPERIENCE, REMOVE_NOTIFICATION, COMPLETE_ITEM, INCREASE_COINS, OPEN_SETTINGS, REMOVE_FROM_LIST, LEVEL_UP, INCREASE_COUNTER, SHOW_NOTIFICATION, DECREASE_COUNTER, DECREASE_HEALTH, CLOSE_LVL_MODAL, OPEN_LVL_MODAL, OPEN_NO_HEALTH_MODAL, CLOSE_NO_HEALTH_MODAL, CHECK_OUT_DAILY_TASK } from "./actions"
+import { OPEN_MODAL, CLOSE_MODAL, CHANGE_NAME, OPEN_CUSTOMIZE_CHARACTER, CLOSE_CUSTOMIZE_CHARACTER, ADD_TO_LIST, SET_TO_DO_VALUE, REMOVE_TO_DO_ITEM, INCREASE_EXPERIENCE, REMOVE_NOTIFICATION, COMPLETE_ITEM, INCREASE_COINS, OPEN_SETTINGS, REMOVE_FROM_LIST, LEVEL_UP, INCREASE_COUNTER, SHOW_NOTIFICATION, DECREASE_COUNTER, DECREASE_HEALTH, CLOSE_LVL_MODAL, OPEN_LVL_MODAL, OPEN_NO_HEALTH_MODAL, CLOSE_NO_HEALTH_MODAL, CHECK_OUT_DAILY_TASK, RESET_CHECK_OUT, DECREASE_COINS, DECREASE_EXPERIENCE, TO_BOTTOM } from "./actions"
 
 const reducer = (state, action) => {
 
@@ -61,9 +61,14 @@ const reducer = (state, action) => {
         let change = skrpa.concat({
             name: action.payload,
             id: new Date().getTime(),
+            // Habit List
             increaseCounter: 0,
             decreaseCounter: 0,
+            // ---------- //
+            // Daily Task List
             isCheckedOut: false,
+            DailyCounter: 0,
+            // ------------//
             settings: false
         })
 
@@ -84,7 +89,6 @@ const reducer = (state, action) => {
         let list = action.list
         let change = list.filter((item) => item.id !== action.payload)
 
-        console.log(change)
         if (action.list === state.To_Do_List) {
             return { ...state, To_Do_List: change }
         }
@@ -124,11 +128,39 @@ const reducer = (state, action) => {
 
     if (action.type === CHECK_OUT_DAILY_TASK) {
 
+
+
         let change = state.Daily_Task_List.map((item) => {
-            return { ...item, isCheckedOut: !item.isCheckedOut }
+            if (item.id === action.payload) {
+                if (item.isCheckedOut) {
+
+
+                    return { ...item, isCheckedOut: !item.isCheckedOut, DailyCounter: item.DailyCounter - 1 }
+                }
+                if (!item.isCheckedOut) {
+
+                    return { ...item, isCheckedOut: !item.isCheckedOut, DailyCounter: item.DailyCounter + 1 }
+                }
+            }
+            else {
+                return { ...item }
+            }
+
         })
 
+
+
+
         console.log(change)
+
+        return { ...state, Daily_Task_List: change }
+    }
+
+    if (action.type === RESET_CHECK_OUT) {
+
+        let change = state.Daily_Task_List.map((item) => {
+            return { ...item, isCheckedOut: false }
+        })
 
         return { ...state, Daily_Task_List: change }
     }
@@ -140,7 +172,17 @@ const reducer = (state, action) => {
                 experience: Math.floor((singleStat.experience + action.payload) * 100 / 100),
             }
         })
-        return { ...state, characterStats: change, notifications: state.notifications.concat({ exp: 'experience', amount: action.payload }) }
+        return { ...state, characterStats: change, notifications: state.notifications.concat({ exp: 'experience', amount: action.payload, type: 'increase' }) }
+    }
+
+    if (action.type === DECREASE_EXPERIENCE) {
+        let change = state.characterStats.map((singleStat) => {
+            return {
+                ...singleStat,
+                experience: Math.floor((singleStat.experience - action.payload) * 100 / 100),
+            }
+        })
+        return { ...state, characterStats: change, notifications: state.notifications.concat({ exp: 'experience', amount: action.payload, type: 'decrease' }) }
     }
 
     if (action.type === LEVEL_UP) {
@@ -161,7 +203,19 @@ const reducer = (state, action) => {
         return {
             ...state, coins: change, notifications: state.notifications.concat({
                 coins: 'coins',
-                amount: action.payload
+                amount: action.payload,
+                type: 'increase'
+            })
+        }
+    }
+
+    if (action.type === DECREASE_COINS) {
+        let change = (Math.floor((state.coins - action.payload) * 100) / 100)
+        return {
+            ...state, coins: change, notifications: state.notifications.concat({
+                coins: 'coins',
+                amount: action.payload,
+                type: 'decrease'
             })
         }
     }
@@ -245,6 +299,29 @@ const reducer = (state, action) => {
 
 
         return { ...state, characterStats: change, notifications: state.notifications.concat({ health: 'health', amount: action.payload }) }
+    }
+
+    if (action.type === TO_BOTTOM) {
+
+        let list = action.list
+        // NEEDS FIXING --- NOT FINISHED YET!
+
+        let change = list.filter((item) => item.id !== action.payload)
+
+        if (action.list === state.To_Do_List) {
+            return { ...state, To_Do_List: change }
+        }
+        else if (action.list === state.Daily_Task_List) {
+            return { ...state, Daily_Task_List: change }
+        }
+        else if (action.list === state.Habit_List) {
+            return { ...state, Habit_List: change }
+        }
+
+        return { ...state }
+
+
+        return { ...state }
     }
 
     return state

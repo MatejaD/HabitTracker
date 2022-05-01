@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { SET_TO_DO_VALUE, COMPLETE_ITEM, INCREASE_EXPERIENCE, INCREASE_COINS, ADD_TO_LIST, REMOVE_FROM_LIST, OPEN_SETTINGS, INCREASE_COUNTER, SHOW_NOTIFICATION, DECREASE_COUNTER, DECREASE_HEALTH, CHECK_OUT_DAILY_TASK } from "../../Redux/actions";
+import { SET_TO_DO_VALUE, COMPLETE_ITEM, INCREASE_EXPERIENCE, INCREASE_COINS, ADD_TO_LIST, REMOVE_FROM_LIST, OPEN_SETTINGS, INCREASE_COUNTER, SHOW_NOTIFICATION, DECREASE_COUNTER, DECREASE_HEALTH, CHECK_OUT_DAILY_TASK, DECREASE_EXPERIENCE, DECREASE_COINS, TO_BOTTOM } from "../../Redux/actions";
 // Icons
 import { BsCheck, BsPen, BsFillTrashFill, BsSkipForwardBtn } from 'react-icons/bs'
 import { HiOutlineDotsVertical } from 'react-icons/hi'
@@ -30,7 +30,7 @@ export default function Habits({ taskList, taskName, addItem, characterStat, pla
     const options = [
         { icon: <BsPen />, name: 'Edit', type: '', },
         { icon: <AiOutlineArrowUp />, name: 'To Top', type: '', },
-        { icon: <AiOutlineArrowDown />, name: 'To Bottom', type: '', },
+        { icon: <AiOutlineArrowDown />, name: 'To Bottom', type: TO_BOTTOM, },
         { icon: <BsFillTrashFill className="text-red-600" />, name: 'Delete', type: REMOVE_FROM_LIST, },
 
     ]
@@ -54,10 +54,16 @@ export default function Habits({ taskList, taskName, addItem, characterStat, pla
         dispatch({ type: SHOW_NOTIFICATION })
     }
 
-    const checkOutDailyTask = (id) => {
-
-
+    const checkOutDailyTask = (id, isCheckedOut) => {
         dispatch({ type: CHECK_OUT_DAILY_TASK, payload: id })
+        if (!isCheckedOut) {
+            dispatch({ type: INCREASE_EXPERIENCE, payload: 5 })
+            dispatch({ type: INCREASE_COINS, payload: 2 })
+        }
+        else {
+            dispatch({ type: DECREASE_EXPERIENCE, payload: 5 })
+            dispatch({ type: DECREASE_COINS, payload: 2 })
+        }
     }
 
     const increaseHabitAmount = (id) => {
@@ -106,7 +112,7 @@ export default function Habits({ taskList, taskName, addItem, characterStat, pla
                             onMouseEnter={() => setShowSettings(true)}
                             onMouseLeave={() => setShowSettings(false)}
                             key={item.id}
-                            className={`flex justify-between items-center transition-all duration-150 ease-linear hover:border-gray-700 hover:border border-slate-50  relative w-96  min-h-16    shadow-md shadow-gray-500 rounded-md ${taskList === To_Do_List ? 'bg-yellow-400' : 'bg-gray-500'}`}>
+                            className={`flex justify-between items-center transition-all duration-150 ease-linear hover:border-gray-700 hover:border border-slate-50  relative w-96  min-h-16    shadow-md shadow-gray-500 rounded-md ${taskList === To_Do_List ? 'bg-yellow-400' : taskList === Daily_Task_List ? item.isCheckedOut ? "bg-gray-500 opacity-90" : 'bg-blue-700' : 'bg-gray-500'}`}>
 
                             {/* Settings Icon */}
                             {showSettings ?
@@ -139,8 +145,9 @@ export default function Habits({ taskList, taskName, addItem, characterStat, pla
                                 {/* CHECK OUT DAILY TASK */}
 
                                 <button
-                                    onClick={() => checkOutDailyTask(item.id)}
-                                    className={`check-container text-2xl rounded-sm w-8 h-8 mx-2   flex justify-center items-center ${taskList === Daily_Task_List ? '' : 'hidden'} ${isCheckedOut ? 'bg-red-700' : 'bg-slate-100'}`}>
+                                    onClick={() => checkOutDailyTask(item.id, item.isCheckedOut)}
+                                    className={`check-container text-2xl rounded-sm w-8 h-8 mx-2   flex justify-center items-center ${taskList === Daily_Task_List ? '' : 'hidden'} ${item.isCheckedOut ? 'text-gray-500 bg-slate-100 opacity-70' : 'bg-slate-100 opacity-100'}`}>
+                                    {item.isCheckedOut ? <BsCheck /> : ''}
                                 </button>
                                 {/* ----------------------------------------------- */}
 
@@ -156,18 +163,18 @@ export default function Habits({ taskList, taskName, addItem, characterStat, pla
 
                             </div>
                             <div className="relative text-field   flex  bg-white  justify-center whitespace-normal items-center px-4 min-h-full  w-9/12  ">
-                                <h2 className={`text-field flex  justify-start flex-grow  items-center w-48  my-10 ${taskList === Daily_Task_List ? isCheckedOut ? 'text-gray-400' : '' : ''} `}>{item.name}</h2>
+                                <h2 className={`text-field flex  justify-start flex-grow  items-center w-48  my-10 ${taskList === Daily_Task_List ? item.isCheckedOut ? 'text-gray-400' : '' : ''} `}>{item.name}</h2>
                                 <div className={`absolute flex items-center justify-end gap-3 text-xs text-gray-500 w-28 px-1 bottom-1 right-3 ${taskList === To_Do_List ? 'hidden' : ''}`}>
                                     <p className="text-xl text-gray-500"><BsSkipForwardBtn /></p>
+                                    <span className={` ${taskList === Daily_Task_List ? '' : 'hidden'}`}>{item.DailyCounter}</span>
                                     <div className={`text-sm ${taskList === Habit_List ? '' : 'hidden'} `}>
                                         <span>{item.increaseCounter}+</span>
                                         <span>/</span>
                                         <span>{item.decreaseCounter}</span>
-
                                     </div>
                                 </div>
                                 {item.settings ?
-                                    <div className="flex flex-col justify-start items-center rounded-md py-2 px-2 absolute w-36 h-32 border-2 bg-zinc-100 border-black right-5 top-6 z-20  ">
+                                    <div className="flex flex-col justify-start items-center rounded-md py-2 px-2 absolute w-36 h-32 border-2 bg-zinc-100 border-black right-2.5 top-5 z-20  ">
 
                                         {options.map((option) => {
                                             const { icon, name } = option
@@ -189,7 +196,7 @@ export default function Habits({ taskList, taskName, addItem, characterStat, pla
 
                             </div>
 
-                            <div className={` min-h-full h-24   border-blue-500  w-12 rounded-r-md  ${taskList !== To_Do_List ? '' : 'hidden'} `}>
+                            <div className={` min-h-full h-24    w-12 rounded-r-md  ${taskList !== To_Do_List ? '' : 'hidden'} `}>
 
                             </div>
 
