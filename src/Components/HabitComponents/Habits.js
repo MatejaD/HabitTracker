@@ -116,7 +116,7 @@ export default function Habits({ taskList, taskName, addItem, characterStat, pla
                                 dispatch({ type: CLOSE_SETTINGS, payload: item.id, list: taskList })
                             }}
                             key={item.id}
-                            className={`flex justify-between items-center transition-all duration-150 ease-linear hover:border-gray-700 hover:border border-slate-50  relative w-96  min-h-16    shadow-md shadow-gray-500 rounded-md ${taskList === To_Do_List ? 'bg-yellow-400' : taskList === Daily_Task_List ? item.isCheckedOut ? "bg-gray-500 opacity-90" : 'bg-blue-700' : 'bg-gray-500'}`}>
+                            className={`flex justify-between items-center transition-all duration-150 ease-linear hover:border-gray-700 hover:border border-slate-50  relative w-96  min-h-16    shadow-md shadow-gray-500 rounded-md ${taskList === To_Do_List ? 'bg-yellow-400' : taskList === Daily_Task_List ? item.isCheckedOut ? "bg-gray-500 opacity-90" : 'bg-blue-700' : ((item.increaseCounter + item.decreaseCounter) === 0) ? 'bg-gray-500' : item.increaseCounter > Math.abs(item.decreaseCounter) ? 'bg-green-600' : 'bg-red-600'}`}>
 
                             {/* Settings Icon */}
                             {item.showSettingsIcon ?
@@ -135,10 +135,10 @@ export default function Habits({ taskList, taskName, addItem, characterStat, pla
 
 
                             {/* ------ */}
-                            <div className={`flex absolute right-1 top-8 justify-center items-center text-lg text-white bg-slate-600 hover:bg-slate-500 w-10 h-10 rounded-full ${taskList === Habit_List ? '' : 'hidden'}`}>
+                            <div className={`flex absolute right-1 top-8 justify-center items-center text-lg text-white  w-10 h-10 rounded-full ${taskList === Habit_List ? '' : 'hidden'}`}>
                                 <button
                                     onClick={() => decreaseHabitAmount(item.id)}
-                                    className={`flex justify-center items-center text-lg text-white w-10 h-10 rounded-full bg-slate-600 hover:bg-gray-700 ${taskList === Habit_List ? '' : 'hidden'}`} >
+                                    className={`flex justify-center items-center text-lg text-white w-10 h-10 rounded-full bg-black bg-opacity-30  hover:bg-opacity-60 ${taskList === Habit_List ? '' : 'hidden'}`} >
                                     <FaMinus />
                                 </button>
                             </div>
@@ -159,7 +159,7 @@ export default function Habits({ taskList, taskName, addItem, characterStat, pla
 
                                 <button
                                     onClick={() => increaseHabitAmount(item.id)}
-                                    className={`flex justify-center items-center text-lg text-white w-10 h-10 rounded-full bg-slate-600 hover:bg-gray-700 ${taskList === Habit_List ? '' : 'hidden'}`} >
+                                    className={`flex justify-center items-center text-lg text-white w-10 h-10 rounded-full bg-black bg-opacity-30  hover:bg-opacity-60 ${taskList === Habit_List ? '' : 'hidden'}`} >
                                     <FaPlus />
                                 </button>
 

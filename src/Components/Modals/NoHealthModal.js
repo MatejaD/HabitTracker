@@ -12,7 +12,7 @@ export default function NoHealthModal() {
     return (
         <>
             <div
-                className="flex flex-col justify-center gap-2 py-2  items-center absolute z-40  rounded-sm top-15 right-25 w-1/4 h-4/5 bg-white border-2 border-black">
+                className="flex flex-col justify-center gap-2 py-2  items-center fixed z-40  rounded-sm top-15 right-25 w-1/4 h-4/5 bg-white border-2 border-black">
 
                 <div className="flex flex-col  justify-around z-40 items-center h-1/4 w-full">
                     <h2 className=" w-56  text-center h-10 mb-0 text-xl">You died...</h2>

@@ -26,7 +26,7 @@ export default function Sidebar() {
         },
         {
             icon: <BsShop />,
-            navigate: '/',
+            navigate: '/shop',
             id: 3,
         },
         {

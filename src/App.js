@@ -17,6 +17,7 @@ import CalendarPage from './Components/CalendarPage';
 import { AiFillHeart, AiFillStar } from 'react-icons/ai'
 import { BsCoin, BsHeartFill } from 'react-icons/bs'
 import NoHealthModal from './Components/Modals/NoHealthModal';
+import Shop from './Components/Shop';
 
 
 
@@ -74,7 +75,7 @@ function App() {
   }, [health])
 
   return (
-    <main className="relative font-body w-screen min-h-screen   flex justify-center items-center bg-green-400">
+    <main className='w-screen bg-blue-500   flex flex-col justify-center gap-4 items-center min-h-screen p-4  '>
       <Sidebar />
 
       {
@@ -169,11 +170,11 @@ function Content() {
 
   }, [])
 
-  
+
 
   return (
     <div
-      className={`${transitionStage}flex relative flex-col items-start justify-start w-full ml-2 min-h-screen h-screen`}
+      className={`${transitionStage} w-screen bg-blue-500   flex flex-col justify-center gap-4 items-center min-h-screen p-4 `}
       onAnimationEnd={() => {
         if (transitionStage === "fadeOut") {
           setTransistionStage("fadeIn");
@@ -217,8 +218,9 @@ function Content() {
 
 
       <Routes location={displayLocation}>
-        <Route path='/calendar' element={<CalendarPage />} />
         <Route path='/' element={<MainPage />} />
+        <Route path='/calendar' element={<CalendarPage />} />
+        <Route path='/shop' element={<Shop />} />
       </Routes>
     </div >
   );
