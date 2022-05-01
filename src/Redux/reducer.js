@@ -1,5 +1,5 @@
 import { act } from "react-dom/test-utils"
-import { OPEN_MODAL, CLOSE_MODAL, CHANGE_NAME, OPEN_CUSTOMIZE_CHARACTER, CLOSE_CUSTOMIZE_CHARACTER, ADD_TO_LIST, SET_TO_DO_VALUE, REMOVE_TO_DO_ITEM, INCREASE_EXPERIENCE, REMOVE_NOTIFICATION, COMPLETE_ITEM, INCREASE_COINS, OPEN_SETTINGS, REMOVE_FROM_LIST, LEVEL_UP, INCREASE_COUNTER, SHOW_NOTIFICATION, DECREASE_COUNTER, DECREASE_HEALTH, CLOSE_LVL_MODAL, OPEN_LVL_MODAL, OPEN_NO_HEALTH_MODAL, CLOSE_NO_HEALTH_MODAL, CHECK_OUT_DAILY_TASK, RESET_CHECK_OUT, DECREASE_COINS, DECREASE_EXPERIENCE, TO_BOTTOM } from "./actions"
+import { OPEN_MODAL, CLOSE_MODAL, CHANGE_NAME, OPEN_CUSTOMIZE_CHARACTER, CLOSE_CUSTOMIZE_CHARACTER, ADD_TO_LIST, SET_TO_DO_VALUE, REMOVE_TO_DO_ITEM, INCREASE_EXPERIENCE, REMOVE_NOTIFICATION, COMPLETE_ITEM, INCREASE_COINS, OPEN_SETTINGS, REMOVE_FROM_LIST, LEVEL_UP, INCREASE_COUNTER, SHOW_NOTIFICATION, DECREASE_COUNTER, DECREASE_HEALTH, CLOSE_LVL_MODAL, OPEN_LVL_MODAL, OPEN_NO_HEALTH_MODAL, CLOSE_NO_HEALTH_MODAL, CHECK_OUT_DAILY_TASK, RESET_CHECK_OUT, DECREASE_COINS, DECREASE_EXPERIENCE, TO_BOTTOM, CLOSE_SETTINGS, SHOW_SETTINGS_ICON } from "./actions"
 
 const reducer = (state, action) => {
 
@@ -69,7 +69,10 @@ const reducer = (state, action) => {
             isCheckedOut: false,
             DailyCounter: 0,
             // ------------//
-            settings: false
+            // ITEM SETTINGS
+            settings: false,
+            showSettingsIcon: false
+
         })
 
         if (action.list === state.To_Do_List) {
@@ -260,6 +263,49 @@ const reducer = (state, action) => {
         return { ...state }
     }
 
+    if (action.type === CLOSE_SETTINGS) {
+
+        let change = action.list.map((item) => {
+            return { ...item, settings: false, showSettingsIcon: false }
+        })
+
+        if (action.list === state.To_Do_List) {
+            return { ...state, To_Do_List: change, }
+        }
+        else if (action.list === state.Daily_Task_List) {
+            return { ...state, Daily_Task_List: change }
+        }
+        else if (action.list === state.Habit_List) {
+            return { ...state, Habit_List: change, }
+        }
+
+
+        return { ...state, }
+    }
+
+    if (action.type === SHOW_SETTINGS_ICON) {
+
+        let change = action.list.map((item) => {
+            if (item.id === action.payload) {
+                return { ...item, showSettingsIcon: true }
+            }
+            else {
+                return { ...item, showSettingsIcon: false }
+            }
+        })
+
+        if (action.list === state.To_Do_List) {
+            return { ...state, To_Do_List: change, }
+        }
+        else if (action.list === state.Daily_Task_List) {
+            return { ...state, Daily_Task_List: change }
+        }
+        else if (action.list === state.Habit_List) {
+            return { ...state, Habit_List: change, }
+        }
+        return { ...state, }
+    }
+
     if (action.type === INCREASE_COUNTER) {
 
         let change = state.Habit_List.map((item, index) => {
@@ -302,11 +348,19 @@ const reducer = (state, action) => {
     }
 
     if (action.type === TO_BOTTOM) {
-
         let list = action.list
-        // NEEDS FIXING --- NOT FINISHED YET!
+        // list.sort((a, b) => {
+        //     return b.id - a.id
+        // })
 
-        let change = list.filter((item) => item.id !== action.payload)
+        let pickedItem = list.find((item) => item.id === action.payload)
+        pickedItem.settings = false
+        pickedItem.showSettingsIcon = false
+        let filter = list.filter((item) => item.id !== action.payload)
+
+        let change = [...filter.concat(pickedItem)]
+
+        console.log(change)
 
         if (action.list === state.To_Do_List) {
             return { ...state, To_Do_List: change }
@@ -321,7 +375,6 @@ const reducer = (state, action) => {
         return { ...state }
 
 
-        return { ...state }
     }
 
     return state

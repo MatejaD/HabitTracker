@@ -7,7 +7,7 @@ import CustomizeCharacter from './Components/Modals/CustomizeCharacter';
 import LvlUpModul from './Components/Modals/LvlUpModul';
 // Redux
 import { useSelector, useDispatch } from 'react-redux'
-import { OPEN_LVL_MODAL, OPEN_MODAL, OPEN_NO_HEALTH_MODAL, REMOVE_NOTIFICATION, RESET_CHECK_OUT } from './Redux/actions';
+import { CLOSE_SETTINGS, OPEN_LVL_MODAL, OPEN_MODAL, OPEN_NO_HEALTH_MODAL, REMOVE_NOTIFICATION, RESET_CHECK_OUT } from './Redux/actions';
 // Router
 import { useLocation } from 'react-router-dom';
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
@@ -168,6 +168,8 @@ function Content() {
     }
 
   }, [])
+
+  
 
   return (
     <div

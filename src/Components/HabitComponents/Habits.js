@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { SET_TO_DO_VALUE, COMPLETE_ITEM, INCREASE_EXPERIENCE, INCREASE_COINS, ADD_TO_LIST, REMOVE_FROM_LIST, OPEN_SETTINGS, INCREASE_COUNTER, SHOW_NOTIFICATION, DECREASE_COUNTER, DECREASE_HEALTH, CHECK_OUT_DAILY_TASK, DECREASE_EXPERIENCE, DECREASE_COINS, TO_BOTTOM } from "../../Redux/actions";
+import { SET_TO_DO_VALUE, COMPLETE_ITEM, INCREASE_EXPERIENCE, INCREASE_COINS, ADD_TO_LIST, REMOVE_FROM_LIST, OPEN_SETTINGS, INCREASE_COUNTER, SHOW_NOTIFICATION, DECREASE_COUNTER, DECREASE_HEALTH, CHECK_OUT_DAILY_TASK, DECREASE_EXPERIENCE, DECREASE_COINS, TO_BOTTOM, CLOSE_SETTINGS, SHOW_SETTINGS_ICON } from "../../Redux/actions";
 // Icons
 import { BsCheck, BsPen, BsFillTrashFill, BsSkipForwardBtn } from 'react-icons/bs'
 import { HiOutlineDotsVertical } from 'react-icons/hi'
@@ -12,7 +12,6 @@ export default function Habits({ taskList, taskName, addItem, characterStat, pla
 
     const [inputValue, setInputValue] = useState('')
     const [showSettings, setShowSettings] = useState(false)
-    const [skrpa, setSkrpa] = useState(false)
     // NEEDS FIXING ====>
     const isCheckedOut = useSelector(state => state.Daily_Task_List.isCheckedOut)
 
@@ -81,9 +80,10 @@ export default function Habits({ taskList, taskName, addItem, characterStat, pla
 
     // taskList --- To_Do_List
 
-    taskList.sort((a, b) => {
-        return b.id - a.id
-    })
+    // taskList.sort((a, b) => {
+    //     return b.id - a.id
+    // })
+
 
     return (
         <div className="min-h-screen max-h-full w-full p-4 bg-white rounded-md">
@@ -109,16 +109,20 @@ export default function Habits({ taskList, taskName, addItem, characterStat, pla
                     taskList.map((item, index) => {
 
                         return (<div
-                            onMouseEnter={() => setShowSettings(true)}
-                            onMouseLeave={() => setShowSettings(false)}
+                            onMouseEnter={() =>
+                                dispatch({ type: SHOW_SETTINGS_ICON, payload: item.id, list: taskList })
+                            }
+                            onMouseLeave={() => {
+                                dispatch({ type: CLOSE_SETTINGS, payload: item.id, list: taskList })
+                            }}
                             key={item.id}
                             className={`flex justify-between items-center transition-all duration-150 ease-linear hover:border-gray-700 hover:border border-slate-50  relative w-96  min-h-16    shadow-md shadow-gray-500 rounded-md ${taskList === To_Do_List ? 'bg-yellow-400' : taskList === Daily_Task_List ? item.isCheckedOut ? "bg-gray-500 opacity-90" : 'bg-blue-700' : 'bg-gray-500'}`}>
 
                             {/* Settings Icon */}
-                            {showSettings ?
+                            {item.showSettingsIcon ?
                                 <button
                                     onClick={() => dispatch({ type: OPEN_SETTINGS, payload: item.id, list: taskList })}
-                                    className="absolute top-2 right-12 z-20 cursor-pointer"><HiOutlineDotsVertical /></button>
+                                    className="absolute top-2 right-12 z-20 text-lg cursor-pointer"><HiOutlineDotsVertical /></button>
                                 : ''}
 
                             {/* Only show if taskList is a To-Do */}
@@ -181,8 +185,13 @@ export default function Habits({ taskList, taskName, addItem, characterStat, pla
                                             return (
 
                                                 <div
-                                                    onClick={() => dispatch({ type: option.type, payload: item.id, list: taskList })}
-                                                    className="flex cursor-pointer justify-between items-center w-full h-full">
+                                                    key={name}
+
+                                                    onClick={() => {
+                                                        dispatch({ type: option.type, payload: item.id, list: taskList })
+
+                                                    }}
+                                                    className="flex cursor-pointer hover:bg-gray-300 duration-150 rounded-sm justify-between z-20 items-center w-full h-full">
                                                     <span className="text-xl">{icon}</span>
                                                     <h2>{name}</h2>
                                                 </div>)
