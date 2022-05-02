@@ -1,5 +1,5 @@
 import { act } from "react-dom/test-utils"
-import { OPEN_MODAL, CLOSE_MODAL, CHANGE_NAME, OPEN_CUSTOMIZE_CHARACTER, CLOSE_CUSTOMIZE_CHARACTER, ADD_TO_LIST, SET_TO_DO_VALUE, REMOVE_TO_DO_ITEM, INCREASE_EXPERIENCE, REMOVE_NOTIFICATION, COMPLETE_ITEM, INCREASE_COINS, OPEN_SETTINGS, REMOVE_FROM_LIST, LEVEL_UP, INCREASE_COUNTER, SHOW_NOTIFICATION, DECREASE_COUNTER, DECREASE_HEALTH, CLOSE_LVL_MODAL, OPEN_LVL_MODAL, OPEN_NO_HEALTH_MODAL, CLOSE_NO_HEALTH_MODAL, CHECK_OUT_DAILY_TASK, RESET_CHECK_OUT, DECREASE_COINS, DECREASE_EXPERIENCE, TO_BOTTOM, CLOSE_SETTINGS, SHOW_SETTINGS_ICON } from "./actions"
+import { OPEN_MODAL, CLOSE_MODAL, CHANGE_NAME, OPEN_CUSTOMIZE_CHARACTER, CLOSE_CUSTOMIZE_CHARACTER, ADD_TO_LIST, SET_TO_DO_VALUE, REMOVE_TO_DO_ITEM, INCREASE_EXPERIENCE, REMOVE_NOTIFICATION, COMPLETE_ITEM, INCREASE_COINS, OPEN_SETTINGS, REMOVE_FROM_LIST, LEVEL_UP, INCREASE_COUNTER, SHOW_NOTIFICATION, DECREASE_COUNTER, DECREASE_HEALTH, CLOSE_LVL_MODAL, OPEN_LVL_MODAL, OPEN_NO_HEALTH_MODAL, CLOSE_NO_HEALTH_MODAL, CHECK_OUT_DAILY_TASK, RESET_CHECK_OUT, DECREASE_COINS, DECREASE_EXPERIENCE, TO_BOTTOM, CLOSE_SETTINGS, SHOW_SETTINGS_ICON, SORT_ITEMS, OPTION_VALUE } from "./actions"
 
 const reducer = (state, action) => {
 
@@ -352,15 +352,12 @@ const reducer = (state, action) => {
         // list.sort((a, b) => {
         //     return b.id - a.id
         // })
-
         let pickedItem = list.find((item) => item.id === action.payload)
         pickedItem.settings = false
         pickedItem.showSettingsIcon = false
         let filter = list.filter((item) => item.id !== action.payload)
 
         let change = [...filter.concat(pickedItem)]
-
-        console.log(change)
 
         if (action.list === state.To_Do_List) {
             return { ...state, To_Do_List: change }
@@ -373,6 +370,30 @@ const reducer = (state, action) => {
         }
 
         return { ...state }
+    }
+
+    if (action.type === OPTION_VALUE) {
+
+        return { ...state, optionValue: action.payload }
+    }
+
+    if (action.type === SORT_ITEMS) {
+
+        let list = action.list
+        console.log(action.payload)
+        if (action.payload === 'Price') {
+            let change = list.sort((a, b) => b.price - a.price)
+            console.log(change)
+            if (list === state.gear) {
+                return { ...state, gear: change }
+            }
+        }
+
+
+        else {
+            return { ...state }
+        }
+
 
 
     }

@@ -44,7 +44,76 @@ const initalState = {
         }
 
     ],
-    coins: 0.00
+    coins: 0.00,
+    // SHOP
+    optionValue: '',
+    gear: [
+        {
+            name: 'item1',
+            id: 1,
+            price: 20,
+        },
+        {
+            name: 'item2',
+            id: 2,
+            price: 25,
+        },
+        {
+            name: 'item3',
+            id: 3,
+            price: 20,
+        },
+        {
+            name: 'item4',
+            id: 4,
+            price: 20,
+        },
+        {
+            name: 'item5',
+            id: 5,
+            price: 20,
+        },
+        {
+            name: 'item6',
+            id: 6,
+            price: 20,
+        },
+        {
+            name: 'item7',
+            id: 7,
+            price: 20,
+        },
+        {
+            name: 'item8',
+            id: 8,
+            price: 20,
+        },
+        {
+            name: 'item9',
+            id: 9,
+            price: 20,
+        },
+        {
+            name: 'item10',
+            id: 10,
+            price: 20,
+        },
+        {
+            name: 'item11',
+            id: 11,
+            price: 20,
+        },
+        {
+            name: 'item12',
+            id: 12,
+            price: 20,
+        },
+        {
+            name: 'item13',
+            id: 13,
+            price: 20,
+        },
+    ],
 
 
 }

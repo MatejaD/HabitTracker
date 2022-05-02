@@ -38,7 +38,7 @@ export default function CharacterStats() {
 
 
     return (
-        <div className="flex relative items-center justify-center  gap-2 w-5/6 h-2/5 border-2 bg-slate-200 border-gray-800 rounded-md">
+        <div className="flex relative items-center justify-center z-20  gap-2 w-5/6 h-2/5 border-2 bg-slate-200 border-gray-800 rounded-md">
 
             <span className="absolute top-2 right-4 text-lg">Lvl {level}</span>
 

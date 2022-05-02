@@ -93,7 +93,7 @@ export default function Sidebar() {
                 isOpen ?
                     <div
                         onClick={() => setIsOpen(false)}
-                        className="w-screen h-screen fixed z-20">
+                        className="w-screen h-screen  fixed top-0 z-20">
                         <Overlay />
                     </div>
 

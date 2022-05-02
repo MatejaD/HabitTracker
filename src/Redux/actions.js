@@ -65,3 +65,7 @@ export const DECREASE_HEALTH = 'DECREASE_HEALTH'
 
 // TO BOTTOM
 export const TO_BOTTOM = 'TO_BOTTOM'
+
+// SORT ITEMS IN THE SHOP
+export const SORT_ITEMS = 'SORT_ITEMS'
+export const OPTION_VALUE = 'OPTION_VALUE'
