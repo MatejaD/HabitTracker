@@ -188,7 +188,7 @@ function Content() {
           console.log(notificationn)
           if (notificationn.exp === 'experience') {
             return (
-              <div className={`flex justify-between px-2 items-center rounded-sm  z-10  w-48 h-10  border  ${notificationn.type === 'increase' ? 'bg-green-500 border-green-300' : 'bg-red-500 border-red-400'}`}>
+              <div key={notificationn.amount} className={`flex justify-between px-2 items-center rounded-sm  z-10  w-48 h-10  border  ${notificationn.type === 'increase' ? 'bg-green-500 border-green-300' : 'bg-red-500 border-red-400'}`}>
                 <h2>{notificationn.type === 'increase' ? '+' : '-'} {(notificationn.amount).toFixed(2)} Experience</h2>
                 <span className='text-yellow-400 text-3xl '><AiFillStar /></span>
               </div>
@@ -196,7 +196,7 @@ function Content() {
           }
           else if (notificationn.coins === 'coins') {
             return (
-              <div className={`flex justify-between px-2 items-center rounded-sm  z-10  w-48 h-10 border  ${notificationn.type === 'increase' ? 'bg-green-500 border-green-300' : 'bg-red-500 border-red-400'}`}>
+              <div key={notificationn.amount} className={`flex justify-between px-2 items-center rounded-sm  z-10  w-48 h-10 border  ${notificationn.type === 'increase' ? 'bg-green-500 border-green-300' : 'bg-red-500 border-red-400'}`}>
                 <h2>{notificationn.type === 'increase' ? '+' : '-'} {(notificationn.amount).toFixed(2)} Coins</h2>
                 <span className='text-yellow-400 text-3xl '><BsCoin /></span>
               </div>
@@ -204,7 +204,7 @@ function Content() {
           }
           else if (notificationn.health === 'health') {
             return (
-              <div className={`flex justify-between px-2 items-center rounded-sm  z-10  w-48 h-10  border  ${notificationn.type === 'increase' ? 'bg-green-500 border-green-300' : 'bg-red-500 border-red-400'}`}>
+              <div key={notificationn.amount} className={`flex justify-between px-2 items-center rounded-sm  z-10  w-48 h-10  border  ${notificationn.type === 'increase' ? 'bg-green-500 border-green-300' : 'bg-red-500 border-red-400'}`}>
                 <h2>- {(notificationn.amount).toFixed(2)} Health</h2>
                 <span className='text-red-700 text-3xl '><BsHeartFill /></span>
               </div>

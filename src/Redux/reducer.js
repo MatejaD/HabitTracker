@@ -1,5 +1,5 @@
 import { act } from "react-dom/test-utils"
-import { OPEN_MODAL, CLOSE_MODAL, CHANGE_NAME, OPEN_CUSTOMIZE_CHARACTER, CLOSE_CUSTOMIZE_CHARACTER, ADD_TO_LIST, SET_TO_DO_VALUE, REMOVE_TO_DO_ITEM, INCREASE_EXPERIENCE, REMOVE_NOTIFICATION, COMPLETE_ITEM, INCREASE_COINS, OPEN_SETTINGS, REMOVE_FROM_LIST, LEVEL_UP, INCREASE_COUNTER, SHOW_NOTIFICATION, DECREASE_COUNTER, DECREASE_HEALTH, CLOSE_LVL_MODAL, OPEN_LVL_MODAL, OPEN_NO_HEALTH_MODAL, CLOSE_NO_HEALTH_MODAL, CHECK_OUT_DAILY_TASK, RESET_CHECK_OUT, DECREASE_COINS, DECREASE_EXPERIENCE, TO_BOTTOM, CLOSE_SETTINGS, SHOW_SETTINGS_ICON, SORT_ITEMS, OPTION_VALUE } from "./actions"
+import { OPEN_MODAL, CLOSE_MODAL, CHANGE_NAME, OPEN_CUSTOMIZE_CHARACTER, CLOSE_CUSTOMIZE_CHARACTER, ADD_TO_LIST, SET_TO_DO_VALUE, REMOVE_TO_DO_ITEM, INCREASE_EXPERIENCE, REMOVE_NOTIFICATION, COMPLETE_ITEM, INCREASE_COINS, OPEN_SETTINGS, REMOVE_FROM_LIST, LEVEL_UP, INCREASE_COUNTER, SHOW_NOTIFICATION, DECREASE_COUNTER, DECREASE_HEALTH, CLOSE_LVL_MODAL, OPEN_LVL_MODAL, OPEN_NO_HEALTH_MODAL, CLOSE_NO_HEALTH_MODAL, CHECK_OUT_DAILY_TASK, RESET_CHECK_OUT, DECREASE_COINS, DECREASE_EXPERIENCE, TO_BOTTOM, CLOSE_SETTINGS, SHOW_SETTINGS_ICON, SORT_ITEMS, OPTION_VALUE, SET_EDIT_TASK, EDIT_NAME } from "./actions"
 
 const reducer = (state, action) => {
 
@@ -71,7 +71,8 @@ const reducer = (state, action) => {
             // ------------//
             // ITEM SETTINGS
             settings: false,
-            showSettingsIcon: false
+            showSettingsIcon: false,
+            isEditing: false
 
         })
 
@@ -381,21 +382,69 @@ const reducer = (state, action) => {
 
         let list = action.list
         console.log(action.payload)
-        if (action.payload === 'Price') {
+        if (action.payload === 1) {
             let change = list.sort((a, b) => b.price - a.price)
             console.log(change)
-            if (list === state.gear) {
-                return { ...state, gear: change }
-            }
+            return { ...state, gear: change }
         }
-
-
         else {
             return { ...state }
         }
+    }
+
+    if (action.type === SET_EDIT_TASK) {
+
+        let list = action.list
+
+        let change = list.map((item) => {
+            if (item.id === action.payload) {
+
+                return { ...item, isEditing: !item.isEditing, settings: false }
+            }
+            else {
+                return { ...item, isEditing: false, settings: false }
+            }
+        })
+        console.log(change)
+
+        if (action.list === state.To_Do_List) {
+            return { ...state, To_Do_List: change }
+        }
+        else if (action.list === state.Daily_Task_List) {
+            return { ...state, Daily_Task_List: change }
+        }
+        else if (action.list === state.Habit_List) {
+            return { ...state, Habit_List: change }
+        }
 
 
+        return { ...state }
+    }
 
+    if (action.type === EDIT_NAME) {
+
+        let list = action.list
+        let change = list.map((item) => {
+            if (item.id === action.payload) {
+                console.log(action.name)
+                return { ...item, name: action.name, isEditing: false, }
+            }
+            else {
+                return { ...item }
+            }
+        })
+
+        if (action.list === state.To_Do_List) {
+            return { ...state, To_Do_List: change }
+        }
+        else if (action.list === state.Daily_Task_List) {
+            return { ...state, Daily_Task_List: change }
+        }
+        else if (action.list === state.Habit_List) {
+            return { ...state, Habit_List: change }
+        }
+
+        return { ...state }
     }
 
     return state

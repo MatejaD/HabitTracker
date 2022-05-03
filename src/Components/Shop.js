@@ -15,8 +15,8 @@ export default function Shop() {
     const [posts, setPosts] = useState(gear)
     const [showMore, setShowMore] = useState(false)
     const [currentPage, setCurrentPage] = useState(1)
-    const [postsPerPage, setPostsPerPage] = useState(12)
-    const [inputValue, setInputValue] = useState('1')
+    const [postsPerPage, setPostsPerPage] = useState(10)
+    const [inputValue, setInputValue] = useState(0)
 
 
     const options = [
@@ -26,10 +26,13 @@ export default function Shop() {
         { name: 'Price', id: 2 },
     ]
 
-
     useEffect(() => {
-        dispatch({ type: SORT_ITEMS, list: gear, payload: optionValue })
-    }, [optionValue])
+        if (inputValue) {
+            dispatch({ type: SORT_ITEMS, list: gear, payload: inputValue })
+        }
+    }, [inputValue])
+
+
 
     const indexOfLastPost = currentPage * postsPerPage
     const indexOfFirstPost = indexOfLastPost - postsPerPage
@@ -67,7 +70,7 @@ export default function Shop() {
             </div>
             <div className={`flex flex-col items-center justify-around pb-2 ease-in  w-full bg-slate-50 ${showMore ? 'h-96' : 'h-64'}`}>
 
-                <div className={`relative flex flex-wrap  items-center gap-4 justify-start px-1 py-10 w-full ${showMore ? "h-64" : 'h-48'}`}>
+                <div className={`relative flex flex-wrap  items-center gap-4 justify-start pl-10 py-10 w-full ${showMore ? "h-64" : 'h-48'}`}>
                     <span
                         className="absolute flex w-28 justify-center gap-2 items-center top-1 left-1  text-xl">
                         Gear
@@ -75,18 +78,20 @@ export default function Shop() {
                             <GiBattleGear />
                         </span>
                     </span>
-                    <form className="absolute top-2 left-36 w-24" >
-                        <select value={optionValue} onChange={(e) => dispatch({ type: OPTION_VALUE, payload: e.target.value })}
+
+
+                    {/* <form className="absolute top-2 left-36 w-24" >
+                        <select value={inputValue} onChange={(e) => setInputValue(e.target.value)}
                             className="w-full ">
                             <option hidden> skrpa</option>
                             {options.map((option) => {
                                 return (
 
-                                    <option onClick={() => dispatch({ type: OPTION_VALUE, payload: option.name })} key={option.name} value={option.name}>{option.name}</option>
+                                    <option key={option.id} value={option.id}>{option.name}</option>
                                 )
                             })}
                         </select>
-                    </form>
+                    </form> */}
 
                     {currentPost.map((item) => {
                         return (
@@ -104,7 +109,7 @@ export default function Shop() {
                 <button
                     onClick={() => {
                         setShowMore(!showMore)
-                        { showMore ? setPostsPerPage(12) : setPostsPerPage(15) }
+                        { showMore ? setPostsPerPage(11) : setPostsPerPage(15) }
                     }}
                     className="w-1/3 h-10 border-2 border-black text-2xl rounded-md">
                     {showMore ? 'Show Less' : 'Show More'}

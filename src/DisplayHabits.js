@@ -27,6 +27,7 @@ export default function DisplayHabits() {
         <div className='flex justify-evenly gap-4 py-4 items-top ml-4 min-h-0 w-11/12  '>
 
             <Habits
+                
                 taskList={Habit_List}
                 taskName={'Habit'}
                 taskAction={Habit_Input_Value}

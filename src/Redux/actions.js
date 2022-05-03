@@ -69,3 +69,7 @@ export const TO_BOTTOM = 'TO_BOTTOM'
 // SORT ITEMS IN THE SHOP
 export const SORT_ITEMS = 'SORT_ITEMS'
 export const OPTION_VALUE = 'OPTION_VALUE'
+
+// EDIT TASK
+export const SET_EDIT_TASK = 'SET_EDIT_TASK'
+export const EDIT_NAME = 'EDIT_NAME'
