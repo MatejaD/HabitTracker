@@ -17,8 +17,9 @@ import MainPage from './Components/MainPage';
 import CalendarPage from './Components/CalendarPage';
 // Icons
 import { AiFillHeart, AiFillStar } from 'react-icons/ai'
-import { BsCoin, BsHeartFill, BsFillCaretLeftFill, BsFillCaretRightFill } from 'react-icons/bs'
+import { BsCoin, BsHeartFill, } from 'react-icons/bs'
 import NoHealthModal from './Components/Modals/NoHealthModal';
+import EditingTab from './Components/HabitComponents/EditingTab';
 
 
 
@@ -75,7 +76,7 @@ function App() {
   }, [health])
 
   return (
-    <main className='w-screen bg-blue-500   flex flex-col justify-center gap-4 items-center min-h-screen p-4  '>
+    <main className='w-screen bg-blue-500  relative  flex flex-col justify-start gap-4 items-center min-h-screen p-4  '>
       <Sidebar />
 
       {
@@ -106,7 +107,6 @@ function Content() {
   const [displayLocation, setDisplayLocation] = useState(location);
   const [transitionStage, setTransistionStage] = useState("fadeIn");
 
-  const To_Do_List = useSelector(state => state.To_Do_List)
 
 
   useEffect(() => {
@@ -119,7 +119,11 @@ function Content() {
   const [notification, setNotification] = useState(false)
   const firstUpdate = useRef(true);
 
+  // LISTS
   const Daily_Task_List = useSelector(state => state.Daily_Task_List)
+  const Habit_List = useSelector(state => state.Habit_List)
+  const To_Do_List = useSelector(state => state.To_Do_List)
+
 
   const dispatch = useDispatch()
 
@@ -172,108 +176,23 @@ function Content() {
 
   }, [])
 
-  // calnedar
 
-  const [openCalendar, setOpenCalendar] = useState(false)
 
-  const [clickedDate, setClickedDate] = useState('')
 
-  const [getMonth, setGetMonth] = useState()
-  const [getYear, setGetYear] = useState()
 
-  let monthsName = [
-    'Jan',
-    'Feb',
-    'Mar',
-    'Apr',
-    'May',
-    'Jun',
-    'Jul',
-    'Aug',
-    'Sep',
-    'Oct',
-    'Nov',
-    'Dec'
-  ]
+  const [inputValue, setInputValue] = useState('')
 
-  const handleEdit = (id) => (e) => {
-    e.preventDefault()
-    dispatch({ type: SET_EDIT_TASK, list: Daily_Task_List, payload: id })
 
-  }
+
 
 
   return (
     <>
 
-      {Daily_Task_List.map((item, index) => {
-        if (item.isEditing) {
+      <EditingTab taskList={Daily_Task_List} />
+      <EditingTab taskList={Habit_List} />
+      <EditingTab taskList={To_Do_List} />
 
-
-
-          let day = new Date().getDay()
-          let month = new Date().getMonth()
-          let year = new Date().getFullYear()
-
-          // console.log(day, month, year)
-          // console.log(item)
-
-
-
-          return (
-            <div className='flex  justify-center items-center gap-4 py-7 fixed bg-opacity-30 top-0 right-0 z-50 w-screen h-screen bg-black '>
-              <form onSubmit={handleEdit(item.id)} className='flex p-4 relative flex-col justify-start gap-5 items-center w-1/3 h-full border-2 border-black bg-slate-200'>
-
-                <div className='w-full h-16 flex  justify-end items-start gap-2'>
-                  <button className='w-24 h-10 rounded-md bg-red-500 font-semibold text-slate-100'>Close</button>
-
-                  <button className='w-24 h-10 rounded-md bg-blue-600 font-semibold text-slate-100'>Submit</button>
-
-                </div>
-                <div className='flex flex-col w-full h-16 justify-center items-start'>
-                  <h2>Name</h2>
-                  <input value={item.editName} onChange={(e) => dispatch({ type: 'EDIT', payload: e.target.value })} className='h-10 w-full rounded-md outline-none px-2' type="text" />
-
-                </div>
-
-                <div className='flex flex-col justify-center items-start w-full h-16   '>
-                  <h2>Start Date</h2>
-                  <p
-                    onClick={() => setOpenCalendar(!openCalendar)}
-                    className='flex justify-start px-2  items-center w-full h-2/3 bg-white'>
-                    {clickedDate ? `${clickedDate}/${monthsName[getMonth - 1]}/${getYear}` : `${day}/${monthsName[month - 1]}/${year}`}
-                  </p>
-                </div>
-
-                {openCalendar ?
-                  <Calendar className={`calendar w-full z-20  h-20 mt-10  grid `}
-                    tileClassName={`bg-slate-200 border-2 border-black h-12 w-full `}
-                    minDetail='decade'
-                    view="month"
-                    prev2Label=''
-                    next2Label=''
-                    prevLabel={
-                      <BsFillCaretLeftFill />
-                    }
-                    nextLabel={
-                      <BsFillCaretRightFill />
-                    }
-                    locale="en"
-                    onClickDay={(value) => {
-                      // setClickedDate(value)
-                      setClickedDate((value.getDate()))
-                      setGetMonth(value.getMonth() + 1)
-                      setGetYear(value.getFullYear())
-                      setOpenCalendar(false)
-                      //
-                    }}
-                  />
-
-                  : ""}
-              </form>
-            </div>)
-        }
-      })}
 
 
       <div
@@ -327,8 +246,8 @@ function Content() {
 
         <Routes location={displayLocation}>
           <Route path='/' element={<MainPage />} />
-          <Route path='/calendar' element={<CalendarPage />} />
           <Route path='/shop' element={<Shop />} />
+          <Route path='*' element={<Calendar />} />
         </Routes>
       </div >
     </>

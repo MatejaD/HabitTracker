@@ -192,7 +192,7 @@ export default function Habits({ taskList, taskName, addItem, characterStat, pla
                                     </div>
                                     <div className="relative text-field   flex  bg-white  justify-center whitespace-normal items-center px-4 min-h-full  w-9/12  ">
                                         <h2 className={`text-field flex  justify-start flex-grow  items-center w-48  my-10 ${taskList === Daily_Task_List ? item.isCheckedOut ? 'text-gray-400' : '' : ''} `}>
-                                            {item.isEditing ?
+                                            {/* {item.isEditing ?
                                                 <form onSubmit={handleEdit(item.id)} className="w-full h-full flex justify-start items-center">
                                                     <input
                                                         className="w-full h-full border-2 border-black"
@@ -202,8 +202,9 @@ export default function Habits({ taskList, taskName, addItem, characterStat, pla
                                                         value={editValue}
                                                         onChange={(e) => setEditValue(e.target.value)}
                                                     />
-                                                </form>
-                                                : item.name}
+                                                </form>  : */}
+                                            {item.name}
+                                            {/* } */}
                                         </h2>
                                         <div className={`absolute flex items-center justify-end gap-3 text-xs text-gray-500 w-28 px-1 bottom-1 right-3 ${taskList === To_Do_List ? 'hidden' : ''}`}>
                                             <p className="text-xl text-gray-500"><BsSkipForwardBtn /></p>

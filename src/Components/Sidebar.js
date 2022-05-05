@@ -19,26 +19,21 @@ export default function Sidebar() {
             navigate: '/',
             id: 1,
         },
-        {
-            icon: <BsCalendarCheck />,
-            navigate: '/calendar',
-            id: 2,
-        },
+
         {
             icon: <BsShop />,
             navigate: '/shop',
-            id: 3,
+            id: 2,
         },
         {
             icon: <GoPackage />,
             navigate: '/',
-            id: 4,
+            id: 3,
         },
     ]
 
     const tags = [
         'Home',
-        'Calendar',
         'Shop',
         'Inventory'
     ]
@@ -52,8 +47,8 @@ export default function Sidebar() {
                     onClick={() => setIsOpen(!isOpen)}>
                     {isOpen ? <BsArrowReturnLeft /> : <BsArrowReturnRight />}
                 </button>
-                <div className=" w-1/2 h-4/5 relative flex gap-8">
-                    <div className="relative h-3/5 w-8  flex items-right px-2 justify-between flex-col  py-2 border-black">
+                <div className=" w-1/2 h-3/5 relative flex gap-8">
+                    <div className="relative h-3/5 w-8  flex items-right px-2 justify-around flex-col  py-2 border-black">
                         {icons.map((singleIcon) => {
                             return (<button key={singleIcon.id} onClick={() => {
                                 setIsOpen(false)
@@ -76,7 +71,7 @@ export default function Sidebar() {
                     </div>
 
                     {isOpen ?
-                        <div className="w-full text-xl  h-3/5 flex items-right justify-between py-2.5 flex-col">
+                        <div className="w-full text-xl  h-3/5 flex items-right justify-around py-2.5 flex-col">
                             {tags.map((tag) => {
                                 return <h2 key={tag}>{tag}</h2>
                             })}

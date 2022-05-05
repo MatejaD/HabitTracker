@@ -406,7 +406,6 @@ const reducer = (state, action) => {
                 return { ...item, isEditing: false, settings: false }
             }
         })
-        console.log(change)
 
         if (action.list === state.To_Do_List) {
             return { ...state, To_Do_List: change }
@@ -450,18 +449,87 @@ const reducer = (state, action) => {
 
     if (action.type === 'EDIT') {
 
-        let change = state.Daily_Task_List.map((item) => {
+        let list = action.list
+
+        let change = list.map((item) => {
             if (item.isEditing) {
-                return { ...item, name: action.payload, editName: action.payload }
+                return { ...item, editName: action.payload }
             }
             else {
                 return { ...item }
             }
         })
 
+        if (action.list === state.To_Do_List) {
+            return { ...state, To_Do_List: change }
+        }
+        else if (action.list === state.Daily_Task_List) {
+            return { ...state, Daily_Task_List: change }
+        }
+        else if (action.list === state.Habit_List) {
+            return { ...state, Habit_List: change }
+        }
 
-        return { ...state, Daily_Task_List: change }
+
+        return { ...state, }
     }
+
+    if (action.type === 'SUBMIT_EDIT') {
+
+        let list = action.list
+
+        let change = list.map((item) => {
+            if (item.isEditing) {
+                return { ...item, name: item.editName, isEditing: false }
+            }
+            else {
+                return { ...item }
+            }
+        })
+
+        if (action.list === state.To_Do_List) {
+            return { ...state, To_Do_List: change }
+        }
+        else if (action.list === state.Daily_Task_List) {
+            return { ...state, Daily_Task_List: change }
+        }
+        else if (action.list === state.Habit_List) {
+            return { ...state, Habit_List: change }
+        }
+
+
+        return { ...state, }
+    }
+
+    if (action.type === 'RESET_EDIT') {
+
+
+        let list = action.list
+
+        let change = list.map((item) => {
+            if (item.isEditing) {
+                return { ...item, editName: item.name, isEditing: false }
+            }
+            else {
+                return { ...item }
+            }
+        })
+
+        if (action.list === state.To_Do_List) {
+            return { ...state, To_Do_List: change }
+        }
+        else if (action.list === state.Daily_Task_List) {
+            return { ...state, Daily_Task_List: change }
+        }
+        else if (action.list === state.Habit_List) {
+            return { ...state, Habit_List: change }
+        }
+
+
+        return { ...state }
+    }
+
+
 
     return state
 }
