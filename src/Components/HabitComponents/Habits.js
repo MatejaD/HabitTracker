@@ -53,6 +53,9 @@ export default function Habits({ taskList, taskName, addItem, characterStat, pla
             dispatch({ type: EDIT_NAME, payload: id, name: editValue, list: taskList })
             dispatch({ type: SET_EDIT_TASK, list: taskList, payload: id })
         }
+        else {
+            dispatch({ type: SET_EDIT_TASK, list: taskList, payload: id })
+        }
         setEditValue('')
     }
 
@@ -132,7 +135,7 @@ export default function Habits({ taskList, taskName, addItem, characterStat, pla
                                     onMouseLeave={() => {
                                         dispatch({ type: CLOSE_SETTINGS, payload: item.id, list: taskList })
                                     }}
-                                    key={item.id}
+                                    // ADD A KEY
                                     className={`flex justify-between items-center transition-all duration-150 ease-linear hover:border-gray-700 hover:border border-slate-50  relative w-96  min-h-16    shadow-md shadow-gray-500 rounded-md ${taskList === To_Do_List ? 'bg-yellow-400' : taskList === Daily_Task_List ? item.isCheckedOut ? "bg-gray-500 opacity-90" : 'bg-blue-700' : ((item.increaseCounter + item.decreaseCounter) === 0) ? 'bg-gray-500' : item.increaseCounter > Math.abs(item.decreaseCounter) ? 'bg-green-600' : 'bg-red-600'}`}>
 
 
@@ -156,7 +159,7 @@ export default function Habits({ taskList, taskName, addItem, characterStat, pla
 
 
                                     {/* ------ */}
-                                    <div  className={`flex absolute right-1 top-8 justify-center items-center text-lg text-white  w-10 h-10 rounded-full ${taskList === Habit_List ? '' : 'hidden'}`}>
+                                    <div className={`flex absolute right-1 top-8 justify-center items-center text-lg text-white  w-10 h-10 rounded-full ${taskList === Habit_List ? '' : 'hidden'}`}>
                                         <button
                                             onClick={() => decreaseHabitAmount(item.id)}
                                             className={`flex justify-center items-center text-lg text-white w-10 h-10 rounded-full bg-black bg-opacity-30  hover:bg-opacity-60 ${taskList === Habit_List ? '' : 'hidden'}`} >
@@ -165,7 +168,7 @@ export default function Habits({ taskList, taskName, addItem, characterStat, pla
                                     </div>
 
                                     {/* If tasklist is Habit or Daily show this => */}
-                                    <div  className={`h-full w-12 rounded-l-md flex justify-center items-center   ${taskList !== To_Do_List ? '' : 'hidden'} `}>
+                                    <div className={`h-full w-12 rounded-l-md flex justify-center items-center   ${taskList !== To_Do_List ? '' : 'hidden'} `}>
 
                                         {/* CHECK OUT DAILY TASK */}
 
@@ -223,6 +226,8 @@ export default function Habits({ taskList, taskName, addItem, characterStat, pla
 
                                                             onClick={() => {
                                                                 dispatch({ type: option.type, payload: item.id, list: taskList })
+                                                                setEditValue('')
+
 
                                                             }}
                                                             className="flex cursor-pointer hover:bg-gray-300 duration-150 rounded-sm justify-between z-20 items-center w-full h-full">

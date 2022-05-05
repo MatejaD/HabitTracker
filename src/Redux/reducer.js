@@ -72,7 +72,8 @@ const reducer = (state, action) => {
             // ITEM SETTINGS
             settings: false,
             showSettingsIcon: false,
-            isEditing: false
+            isEditing: false,
+            editName: action.payload,
 
         })
 
@@ -445,6 +446,21 @@ const reducer = (state, action) => {
         }
 
         return { ...state }
+    }
+
+    if (action.type === 'EDIT') {
+
+        let change = state.Daily_Task_List.map((item) => {
+            if (item.isEditing) {
+                return { ...item, name: action.payload, editName: action.payload }
+            }
+            else {
+                return { ...item }
+            }
+        })
+
+
+        return { ...state, Daily_Task_List: change }
     }
 
     return state

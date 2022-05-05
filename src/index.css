@@ -46,6 +46,15 @@ body{
     overflow-wrap: break-word;
 }
 
+.calendar{
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
 .check{
     visibility: hidden;
 }
