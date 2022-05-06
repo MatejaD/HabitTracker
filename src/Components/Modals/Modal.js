@@ -3,6 +3,7 @@ import Overlay from "../Overlay";
 // Redux
 import { useSelector, useDispatch } from 'react-redux'
 import { CLOSE_MODAL, OPEN_MODAL, CHANGE_NAME, OPEN_CUSTOMIZE_CHARACTER } from "../../Redux/actions";
+import Login from "../../Auth/Login";
 
 const Modal = () => {
 
@@ -44,7 +45,7 @@ const Modal = () => {
         <>
             <form
                 onSubmit={handleSubmit}
-                className={`flex flex-col justify-around items-center absolute t-5 left-auto w-2/3 h-2/3  z-50 bg-slate-100 border-2 border-black ${errorMsg ? ' border-red-800 ' : ''} `}>
+                className={`flex flex-col justify-around items-center fixed top-5 left-auto w-2/3 h-2/3  z-50 bg-slate-100 border-2 border-black ${errorMsg ? ' border-red-800 ' : ''} `}>
                 <div className="flex flex-col gap-4 text-center">
                     <h1 className="w-72 text-xl ">Welcome to Husterious,mysterious traveler! State your name.</h1>
                     <p className="w-64 text-gray-600 text-sm">Name can be changed later in the settings menu.</p>
@@ -57,18 +58,19 @@ const Modal = () => {
                             : ''}
 
                     </div>
-                    <input
+                    {/* <input
                         value={nameValue}
                         onChange={(e) => setNameValue(e.target.value)}
                         type="text"
-                        className={`bg-purple-800 w-48 h-10 rounded-md outline-none p-4 text-white text-lg ${errorMsg ? 'border-red-700 border-2' : ''} `} />
-
+                        className={`bg-purple-800 w-48 h-10 rounded-md outline-none p-4 text-white text-lg ${errorMsg ? 'border-red-700 border-2' : ''} `} /> */}
+                    <Login />
                 </div>
             </form>
-            <div className="w-screen h-screen absolute bg-green-600 z-40">
-                <Overlay />
+            <div className="fixed w-screen h-screen bg-blue-600 top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-40">
 
             </div>
+            {/* <Overlay /> */}
+
         </>
 
     )

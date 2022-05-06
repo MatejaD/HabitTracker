@@ -20,10 +20,29 @@ import { AiFillHeart, AiFillStar } from 'react-icons/ai'
 import { BsCoin, BsHeartFill, } from 'react-icons/bs'
 import NoHealthModal from './Components/Modals/NoHealthModal';
 import EditingTab from './Components/HabitComponents/EditingTab';
+// Google Auth
+import Login from './Auth/Login';
+import Logout from './Auth/Logout';
+import { gapi } from 'gapi-script';
 
 
+const clientID = '286571261070-cjkoe7gk3mo32h375e6t43qla80k205u.apps.googleusercontent.com'
 
 function App() {
+
+
+  // Google Auth
+
+  useEffect(() => {
+
+    function start() {
+      gapi.client.init({
+        clientId: clientID,
+        scope: ''
+      })
+    }
+    gapi.load('client:auth2', start)
+  }, [])
 
 
   // MODALS
@@ -78,9 +97,10 @@ function App() {
   return (
     <main className='w-screen bg-blue-500  relative  flex flex-col justify-start gap-4 items-center min-h-screen p-4  '>
       <Sidebar />
-
+      {/* <Login /> */}
+      {/* <Logout /> */}
       {
-        modal ? <Route path='/' element={<Modal />} /> : ''
+        modal ? <Modal /> : ''
       }
 
       {

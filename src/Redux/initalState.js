@@ -2,7 +2,8 @@
 
 const initalState = {
     name: 'skrpa',
-    modal: false,
+    profilePic:'',
+    modal: true,
     customizeCharacter: false,
     lvlUpModal: false,
     noHealthModal: false,

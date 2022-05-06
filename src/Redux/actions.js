@@ -81,3 +81,7 @@ export const UPDATE_DATE = 'UPDATE_DATE'
 export const RESET_EDIT = 'RESET_EDIT'
 // SUBMIT EDIT
 export const SUBMIT_EDIT = 'SUBMIT_EDIT'
+
+// Set Character Name // Google Auth
+export const SET_NAME = 'SET_NAME'
+export const SET_PROFILE_PIC = 'SET_PROFILE_PIC'

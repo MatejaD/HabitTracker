@@ -8,6 +8,9 @@ import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 export default function Sidebar() {
 
+
+    const profilePic = useSelector(state => state.profilePic)
+
     const [isOpen, setIsOpen] = useState(false)
     const navigate = useNavigate()
 
@@ -68,6 +71,10 @@ export default function Sidebar() {
                     <div className={`flex h-16 left-1 absolute bottom-5 ${isOpen ? 'w-36 flex-row justify-start gap-3 pl-2 items-center duration-200 ' : 'justify-center items-center flex-col w-10'}`}>
                         <span className=""><BsCoin /></span>
                         <p className="text-lg">{coins}$</p>
+                    </div>
+
+                    <div className={`flex h-10 w-10 left-1 absolute -bottom-12 justify-center items-center ${isOpen ? 'left-2' : 'left-1'}`}>
+                        <img className="w-full h-full rounded-full" src={profilePic} alt="Pic" />
                     </div>
 
                     {isOpen ?
