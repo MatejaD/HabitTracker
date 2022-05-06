@@ -73,3 +73,11 @@ export const OPTION_VALUE = 'OPTION_VALUE'
 // EDIT TASK
 export const SET_EDIT_TASK = 'SET_EDIT_TASK'
 export const EDIT_NAME = 'EDIT_NAME'
+export const EDIT = 'EDIT'
+
+// Update THE DATE WHEN TASK WAS CREATED
+export const UPDATE_DATE = 'UPDATE_DATE'
+// RESET/CANCEL EDIT
+export const RESET_EDIT = 'RESET_EDIT'
+// SUBMIT EDIT
+export const SUBMIT_EDIT = 'SUBMIT_EDIT'

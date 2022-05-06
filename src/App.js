@@ -208,10 +208,9 @@ function Content() {
         <div className='fixed top-3 right-5 w-48 min-h-16 z-10 flex flex-col gap-2'>
           {/* Map through the array of notifications */}
           {notificationArray.map((notificationn) => {
-            console.log(notificationn)
             if (notificationn.exp === 'experience') {
               return (
-                <div className={`flex justify-between px-2 items-center rounded-sm  z-10  w-48 h-10  border  ${notificationn.type === 'increase' ? 'bg-green-500 border-green-300' : 'bg-red-500 border-red-400'}`}>
+                <div className={` flex justify-between px-2 items-center rounded-sm  z-10  w-48 h-10  border  ${notificationn.type === 'increase' ? 'bg-green-500 border-green-300' : 'bg-red-500 border-red-400'}`}>
                   <h2>{notificationn.type === 'increase' ? '+' : '-'} {(notificationn.amount).toFixed(2)} Experience</h2>
                   <span className='text-yellow-400 text-3xl '><AiFillStar /></span>
                 </div>

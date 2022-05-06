@@ -9,8 +9,8 @@ body{
     overflow-x: hidden;
 }
 
-.fadeIn {
-    animation: 0.5s fadeIn forwards;
+.fadeIn { 
+     animation: 0.5s fadeIn forwards;
 }
 
 .fadeOut {
@@ -39,7 +39,7 @@ body{
         transform: translate(-100px, 0);
         opacity: 0;
     }
-}
+} 
 
 
 .overflow-wrap{
@@ -83,19 +83,19 @@ body{
     hyphens: auto;
 }
 
-.pop-up{
+/* .pop-up{
     display:none ;
    transition-property: ease-in-out;
    transition-duration: 2s;
-}
+} */
 
 @keyframes notification {
    
 }
 
-.pop-down {
+/* .pop-down {
     display: flex;
    transition-property: ease-in-out;
 
 transition-duration: 2s;
-}
+} */
