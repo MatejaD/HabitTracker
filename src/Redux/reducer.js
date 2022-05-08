@@ -585,6 +585,11 @@ const reducer = (state, action) => {
         return { ...state, profilePic: action.payload }
     }
 
+    if (action.type === 'USERS') {
+
+        return { ...state, users: action.payload.docs.map((doc) => ({ ...doc.data(), id: doc.id })) }
+    }
+
 
 
     return state

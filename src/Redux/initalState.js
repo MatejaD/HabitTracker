@@ -1,6 +1,8 @@
 
 
-const initalState = {
+export const initalState = {
+    users: [],
+
     name: '',
     profilePic: '',
     isLoading: true,
@@ -120,4 +122,5 @@ const initalState = {
 
 }
 
-export default initalState
+
+

@@ -26,11 +26,35 @@ import Logout from './Auth/Logout';
 import { gapi } from 'gapi-script';
 import Loading from './Components/Loading';
 
+// Firestore DB
+import { collection, getDocs } from 'firebase/firestore'
+import { db } from './Firebase/firebase'
 
 const clientID = '286571261070-cjkoe7gk3mo32h375e6t43qla80k205u.apps.googleusercontent.com'
 
 function App() {
 
+
+  // const [data, setData] = useState([])
+
+  // // Firestore DB
+  const [users, setUsers] = useState([])
+  const usersCollectionRef = collection(db, 'users')
+
+  const userss = useSelector(state => state.users)
+  useEffect(() => {
+    const getUsers = async () => {
+
+      const data = await getDocs(usersCollectionRef)
+      dispatch({ type: 'USERS', payload: data })
+      setUsers(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })))
+    }
+
+    getUsers()
+  }, [])
+
+
+  console.log(userss[0])
 
   // Google Auth
 
@@ -43,6 +67,8 @@ function App() {
       })
     }
     gapi.load('client:auth2', start)
+
+
   }, [])
 
 
@@ -101,6 +127,12 @@ function App() {
   return (
     <main className='w-screen bg-blue-500  relative  flex flex-col justify-start gap-4 items-center min-h-screen p-4  '>
       <Sidebar />
+
+      {userss.map((item) => {
+
+        return <h2 className=''>{item.name}</h2>
+      })}
+
       {/* <Login /> */}
       {/* <Logout /> */}
 
@@ -141,6 +173,8 @@ function Content() {
   // useEffect(() => {
   //   if (location !== displayLocation) setTransistionStage("fadeOut");
   // }, [location, displayLocation]);
+
+
 
   // NOTIFICATION FOR EXPERIENCE AFTER COMPLETING A TO-DO
   const experience = useSelector(state => state.characterStats[2].experience)
@@ -211,6 +245,21 @@ function Content() {
 
   const [inputValue, setInputValue] = useState('')
 
+
+  const usersCollectionRef = collection(db, 'initialState')
+
+  const [state, setState] = useState([])
+
+
+  useEffect(() => {
+    const getState = async () => {
+      const data = await getDocs(usersCollectionRef)
+      // dispatch({ type: 'USERS', payload: data })
+      setState(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })))
+    }
+
+    getState()
+  }, [])
 
 
 
