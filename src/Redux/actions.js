@@ -85,3 +85,7 @@ export const SUBMIT_EDIT = 'SUBMIT_EDIT'
 // Set Character Name // Google Auth
 export const SET_NAME = 'SET_NAME'
 export const SET_PROFILE_PIC = 'SET_PROFILE_PIC'
+
+// LOADING SCREEN
+export const REMOVE_LOADING_SCREEN = 'REMOVE_LOADING_SCREEN'
+export const ADD_LOADING_SCREEN = 'ADD_LOADING_SCREEN'

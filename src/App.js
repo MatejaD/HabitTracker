@@ -24,6 +24,7 @@ import EditingTab from './Components/HabitComponents/EditingTab';
 import Login from './Auth/Login';
 import Logout from './Auth/Logout';
 import { gapi } from 'gapi-script';
+import Loading from './Components/Loading';
 
 
 const clientID = '286571261070-cjkoe7gk3mo32h375e6t43qla80k205u.apps.googleusercontent.com'
@@ -56,6 +57,9 @@ function App() {
   // HEALTH
   const health = useSelector(state => state.characterStats[0].health)
   const maxHealth = useSelector(state => state.characterStats[0].maxHealth)
+
+  // Loading
+  const isLoading = useSelector(state => state.isLoading)
 
   const dispatch = useDispatch()
 
@@ -99,6 +103,11 @@ function App() {
       <Sidebar />
       {/* <Login /> */}
       {/* <Logout /> */}
+
+      {
+        isLoading ? <Loading /> : ''
+      }
+
       {
         modal ? <Modal /> : ''
       }
@@ -129,9 +138,9 @@ function Content() {
 
 
 
-  useEffect(() => {
-    if (location !== displayLocation) setTransistionStage("fadeOut");
-  }, [location, displayLocation]);
+  // useEffect(() => {
+  //   if (location !== displayLocation) setTransistionStage("fadeOut");
+  // }, [location, displayLocation]);
 
   // NOTIFICATION FOR EXPERIENCE AFTER COMPLETING A TO-DO
   const experience = useSelector(state => state.characterStats[2].experience)

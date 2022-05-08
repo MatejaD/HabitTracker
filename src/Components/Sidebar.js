@@ -44,7 +44,7 @@ export default function Sidebar() {
 
     return (
         <>
-            <nav className={`flex flex-col duration-200 ease-in-out rounded-md  z-30  items-left px-2 justify-around text-3xl h-full bg-white fixed left-0 top-0 ${isOpen ? 'w-48' : 'w-16'}`}>
+            <nav className={`hidden md:flex flex-col duration-200 ease-in-out rounded-md  z-30  items-left px-2 justify-around text-3xl h-full bg-white fixed left-0 top-0 ${isOpen ? 'w-48' : 'w-16'}`}>
                 <button
                     className="px-2"
                     onClick={() => setIsOpen(!isOpen)}>

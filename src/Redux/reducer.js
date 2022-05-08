@@ -1,5 +1,5 @@
 import { act } from "react-dom/test-utils"
-import { OPEN_MODAL, CLOSE_MODAL, CHANGE_NAME, OPEN_CUSTOMIZE_CHARACTER, CLOSE_CUSTOMIZE_CHARACTER, ADD_TO_LIST, SET_TO_DO_VALUE, REMOVE_TO_DO_ITEM, INCREASE_EXPERIENCE, REMOVE_NOTIFICATION, COMPLETE_ITEM, INCREASE_COINS, OPEN_SETTINGS, REMOVE_FROM_LIST, LEVEL_UP, INCREASE_COUNTER, SHOW_NOTIFICATION, DECREASE_COUNTER, DECREASE_HEALTH, CLOSE_LVL_MODAL, OPEN_LVL_MODAL, OPEN_NO_HEALTH_MODAL, CLOSE_NO_HEALTH_MODAL, CHECK_OUT_DAILY_TASK, RESET_CHECK_OUT, DECREASE_COINS, DECREASE_EXPERIENCE, TO_BOTTOM, CLOSE_SETTINGS, SHOW_SETTINGS_ICON, SORT_ITEMS, OPTION_VALUE, SET_EDIT_TASK, EDIT_NAME, UPDATE_DATE, RESET_EDIT, SUBMIT_EDIT, EDIT, SET_NAME, SET_PROFILE_PIC } from "./actions"
+import { OPEN_MODAL, CLOSE_MODAL, CHANGE_NAME, OPEN_CUSTOMIZE_CHARACTER, CLOSE_CUSTOMIZE_CHARACTER, ADD_TO_LIST, SET_TO_DO_VALUE, REMOVE_TO_DO_ITEM, INCREASE_EXPERIENCE, REMOVE_NOTIFICATION, COMPLETE_ITEM, INCREASE_COINS, OPEN_SETTINGS, REMOVE_FROM_LIST, LEVEL_UP, INCREASE_COUNTER, SHOW_NOTIFICATION, DECREASE_COUNTER, DECREASE_HEALTH, CLOSE_LVL_MODAL, OPEN_LVL_MODAL, OPEN_NO_HEALTH_MODAL, CLOSE_NO_HEALTH_MODAL, CHECK_OUT_DAILY_TASK, RESET_CHECK_OUT, DECREASE_COINS, DECREASE_EXPERIENCE, TO_BOTTOM, CLOSE_SETTINGS, SHOW_SETTINGS_ICON, SORT_ITEMS, OPTION_VALUE, SET_EDIT_TASK, EDIT_NAME, UPDATE_DATE, RESET_EDIT, SUBMIT_EDIT, EDIT, SET_NAME, SET_PROFILE_PIC, REMOVE_LOADING_SCREEN, ADD_LOADING_SCREEN } from "./actions"
 
 const reducer = (state, action) => {
 
@@ -75,7 +75,7 @@ const reducer = (state, action) => {
             isEditing: false,
             editName: action.payload,
             // Date
-            day: new Date().getDay(),
+            day: new Date().getDate(),
             month: new Date().getMonth(),
             year: new Date().getFullYear()
 
@@ -92,6 +92,14 @@ const reducer = (state, action) => {
             return { ...state, Habit_List: change }
         }
         return { ...state }
+    }
+
+    if (action.type === REMOVE_LOADING_SCREEN) {
+        return { ...state, isLoading: false }
+    }
+
+    if (action.type === ADD_LOADING_SCREEN) {
+        return { ...state, isLoading: true }
     }
 
     if (action.type === REMOVE_FROM_LIST) {
@@ -573,8 +581,8 @@ const reducer = (state, action) => {
         return { ...state, name: action.payload }
     }
 
-    if(action.type === SET_PROFILE_PIC){
-        return {...state, profilePic: action.payload}
+    if (action.type === SET_PROFILE_PIC) {
+        return { ...state, profilePic: action.payload }
     }
 
 

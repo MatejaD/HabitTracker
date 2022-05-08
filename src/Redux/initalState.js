@@ -1,8 +1,9 @@
 
 
 const initalState = {
-    name: 'skrpa',
-    profilePic:'',
+    name: '',
+    profilePic: '',
+    isLoading: true,
     modal: true,
     customizeCharacter: false,
     lvlUpModal: false,

@@ -62,7 +62,7 @@ export default function EditingTab({ taskList }) {
                     // console.log(day, month, year)
                     // console.log(item)
 
-
+                    console.log(item.day, 'DAY')
                     return (
                         <div key={index} className='flex  justify-center items-center gap-4 py-7 fixed bg-opacity-50 top-0 right-0 z-50 w-screen h-screen bg-black '>
                             <form onSubmit={handleEdit(item.id)} className='flex p-4 relative flex-col justify-start gap-5 items-center w-1/3 h-full border-2 border-black bg-slate-200'>
@@ -127,7 +127,7 @@ export default function EditingTab({ taskList }) {
                                         locale="en"
                                         onClickDay={(value) => {
                                             // setClickedDate(value)
-                                            setClickedDate(() => (value.getDate()))
+                                            setClickedDate(value.getDate())
                                             setGetMonth(value.getMonth())
                                             setGetYear(value.getFullYear())
 

@@ -99,3 +99,16 @@ body{
 
 transition-duration: 2s;
 } */
+
+
+.first-circle{
+    animation-delay: 0.1s;
+}
+
+.second-circle {
+    animation-delay: 0.15s;
+}
+
+.third-circle {
+    animation-delay: 0.2s;
+}

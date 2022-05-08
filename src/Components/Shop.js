@@ -1,5 +1,8 @@
 import React, { useEffect, useState } from "react";
+// Images
 import shield2 from '../Images/shield2.png'
+import warriorHelmet from '../Images/helmetUpdate2.png'
+import greenHelmet from '../Images/greenHelmet2.png'
 // Icons
 import { GiBattleGear } from 'react-icons/gi'
 import { useDispatch, useSelector } from "react-redux";
@@ -39,7 +42,7 @@ export default function Shop() {
     const currentPost = gear.slice(indexOfFirstPost, indexOfLastPost)
 
     return (
-        <div className="w-11/12 h-4/5 flex flex-col justify-start items-end rounded-md min-h-screen mx-auto mt-10 border-2 border-black">
+        <div className="w-11/12 h-4/5 flex flex-col justify-start items-end rounded-md min-h-screen ml-0 md:ml-16 mt-10 border-2 border-black">
             <div className="w-full flex flex-col justify-around items-center rounded-t-md h-60 bg-amber-700">
                 <h1 className="flex justify-center items-center font-semibold text-2xl w-48 h-10 text-slate-100 text-opacity-90 bg-yellow-600 text-center rounded-md border-2 border-yellow-300">
                     Featured Items!
@@ -47,9 +50,9 @@ export default function Shop() {
                 <div className="flex justify-between items-center h-2/3 w-2/5">
 
                     <div className="flex flex-col justify-between items-center rounded-md border-slate-50 border bg-opacity-40 bg-yellow-400 w-24 h-24 ">
-                        <img className="w-3/4" src={shield2} alt="" />
+                        <img className="w-3/4" src={warriorHelmet} alt="" />
                         <div className="flex justify-center items-center w-full h-1/5 bg-white">
-                            <span className="text-sm">30 Coins</span>
+                            <span className="text-sm">70 Coins</span>
                         </div>
                     </div>
                     <div className="flex flex-col justify-between items-center rounded-md border-slate-50 border bg-opacity-40 bg-yellow-400 w-24 h-24 ">
@@ -60,9 +63,9 @@ export default function Shop() {
                     </div>
 
                     <div className="flex flex-col justify-between items-center rounded-md border-slate-50 border bg-opacity-40 bg-yellow-400 w-24 h-24 ">
-                        <img className="w-3/4" src={shield2} alt="" />
+                        <img className="w-3/4" src={greenHelmet} alt="" />
                         <div className="flex justify-center items-center w-full h-1/5 bg-white">
-                            <span className="text-sm">30 Coins</span>
+                            <span className="text-sm">45 Coins</span>
                         </div>
                     </div>
                 </div>

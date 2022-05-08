@@ -139,7 +139,6 @@ export default function Habits({ taskList, taskName, addItem, characterStat, pla
                                     className={`flex justify-between items-center transition-all duration-150 ease-linear hover:border-gray-700 hover:border border-slate-50  relative w-96  min-h-16    shadow-md shadow-gray-500 rounded-md ${taskList === To_Do_List ? 'bg-yellow-400' : taskList === Daily_Task_List ? item.isCheckedOut ? "bg-gray-500 opacity-90" : 'bg-blue-700' : ((item.increaseCounter + item.decreaseCounter) === 0) ? 'bg-gray-500' : item.increaseCounter > Math.abs(item.decreaseCounter) ? 'bg-green-600' : 'bg-red-600'}`}>
 
 
-
                                     {/* Settings Icon */}
 
                                     {item.showSettingsIcon ?

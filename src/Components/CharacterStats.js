@@ -1,5 +1,9 @@
 import React, { useEffect, useState } from "react";
-import character from '../Images/ch.png'
+// Images
+import character from '../Images/characterBig.png'
+import warriorHelmet from '../Images/helmetUpdate2.png'
+import greenHelmet from '../Images/greenHelmet2.png'
+import ch from '../Images/ChGreenHelmet.png'
 
 // Icons
 import { AiFillHeart, AiFillStar } from 'react-icons/ai'
@@ -42,8 +46,9 @@ export default function CharacterStats() {
 
             <span className="absolute top-2 right-4 text-lg">Lvl {level}</span>
 
-            <div className="flex flex-col text-center justify-center items-center text-xl overflow-hidden">
+            <div className="flex flex-col relative text-center justify-center items-center text-xl overflow-hidden">
                 <h2 className=" w-full py-4 h-8  px-4">{name}</h2>
+                {/* <img className="absolute left-11.5 top-10" src={greenHelmet} alt="" /> */}
                 <img className="w-44
             " src={character} alt="" />
             </div>
