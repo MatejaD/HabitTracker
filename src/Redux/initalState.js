@@ -5,7 +5,7 @@ export const initalState = {
 
     name: '',
     profilePic: '',
-    isLoading: true,
+    isLoading: false,
     modal: true,
     customizeCharacter: false,
     lvlUpModal: false,

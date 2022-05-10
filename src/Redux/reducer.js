@@ -3,6 +3,12 @@ import { OPEN_MODAL, CLOSE_MODAL, CHANGE_NAME, OPEN_CUSTOMIZE_CHARACTER, CLOSE_C
 
 const reducer = (state, action) => {
 
+    if (action.type === 'SET_DB') {
+
+        console.log(action.payload)
+        return { ...state, ...action.payload, name: 'YOYO' }
+
+    }
 
     if (action.type === CLOSE_MODAL) {
         return { ...state, modal: false }

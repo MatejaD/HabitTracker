@@ -9,9 +9,9 @@ import Shop from './Components/Shop';
 import Calendar from 'react-calendar'
 // Redux
 import { useSelector, useDispatch } from 'react-redux'
-import { CLOSE_SETTINGS, OPEN_LVL_MODAL, OPEN_MODAL, OPEN_NO_HEALTH_MODAL, REMOVE_NOTIFICATION, RESET_CHECK_OUT, SET_EDIT_TASK } from './Redux/actions';
+import { CLOSE_SETTINGS, OPEN_LVL_MODAL, OPEN_MODAL, OPEN_NO_HEALTH_MODAL, REMOVE_LOADING_SCREEN, REMOVE_NOTIFICATION, RESET_CHECK_OUT, SET_EDIT_TASK } from './Redux/actions';
 // Router
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import MainPage from './Components/MainPage';
 import CalendarPage from './Components/CalendarPage';
@@ -27,8 +27,9 @@ import { gapi } from 'gapi-script';
 import Loading from './Components/Loading';
 
 // Firestore DB
-import { collection, getDocs } from 'firebase/firestore'
+import { addDoc, collection, getDocs } from 'firebase/firestore'
 import { db } from './Firebase/firebase'
+import { initalState } from './Redux/initalState';
 
 const clientID = '286571261070-cjkoe7gk3mo32h375e6t43qla80k205u.apps.googleusercontent.com'
 
@@ -41,20 +42,26 @@ function App() {
   const [users, setUsers] = useState([])
   const usersCollectionRef = collection(db, 'users')
 
+  const navigate = useNavigate()
   const userss = useSelector(state => state.users)
-  useEffect(() => {
-    const getUsers = async () => {
+  const getUsers = async () => {
 
-      const data = await getDocs(usersCollectionRef)
-      dispatch({ type: 'USERS', payload: data })
-      setUsers(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })))
-    }
+    const data = await getDocs(usersCollectionRef)
+    dispatch({ type: 'USERS', payload: data })
+    dispatch({ type: 'SET_DB', payload: data.docs.map((doc) => ({ ...doc.data(), id: doc.id })) })
+    setUsers(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })))
+  }
+
+  useEffect(() => {
 
     getUsers()
   }, [])
 
-
-  console.log(userss[0])
+  const createUser = async () => {
+    await addDoc(usersCollectionRef, { name: Math.random(), age: 66 })
+    dispatch({ type: REMOVE_LOADING_SCREEN })
+    await getUsers()
+  }
 
   // Google Auth
 
@@ -67,7 +74,6 @@ function App() {
       })
     }
     gapi.load('client:auth2', start)
-
 
   }, [])
 
@@ -128,11 +134,14 @@ function App() {
     <main className='w-screen bg-blue-500  relative  flex flex-col justify-start gap-4 items-center min-h-screen p-4  '>
       <Sidebar />
 
-      {userss.map((item) => {
 
-        return <h2 className=''>{item.name}</h2>
-      })}
-
+      {
+        users.map((user) => {
+          return <h2>{user.name}</h2>
+        })
+      }
+      <button onClick={() => createUser()
+      }>Add User</button>
       {/* <Login /> */}
       {/* <Logout /> */}
 

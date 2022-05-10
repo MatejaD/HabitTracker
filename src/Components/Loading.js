@@ -1,8 +1,10 @@
 import React from "react";
+import Login from "../Auth/Login";
 
 export default function Loading() {
     return <div className="fixed top-0 right-0 flex  gap-2 justify-center items-center z-50  w-screen h-screen bg-blue-500">
 
+        <Login />
 
         <h2 className="text-6xl font-bold font-body">Loading</h2>
 
