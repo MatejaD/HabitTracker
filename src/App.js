@@ -9,7 +9,7 @@ import Shop from './Components/Shop';
 import Calendar from 'react-calendar'
 // Redux
 import { useSelector, useDispatch } from 'react-redux'
-import { CLOSE_SETTINGS, OPEN_LVL_MODAL, OPEN_MODAL, OPEN_NO_HEALTH_MODAL, REMOVE_LOADING_SCREEN, REMOVE_NOTIFICATION, RESET_CHECK_OUT, SET_EDIT_TASK } from './Redux/actions';
+import { CLOSE_SETTINGS, OPEN_LVL_MODAL, OPEN_MODAL, OPEN_NO_HEALTH_MODAL, REMOVE_LOADING_SCREEN, REMOVE_NOTIFICATION, RESET_CHECK_OUT, SET_EDIT_TASK, SET_NAME } from './Redux/actions';
 // Router
 import { useLocation, useNavigate } from 'react-router-dom';
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
@@ -27,9 +27,12 @@ import { gapi } from 'gapi-script';
 import Loading from './Components/Loading';
 
 // Firestore DB
-import { addDoc, collection, getDocs } from 'firebase/firestore'
+import { addDoc, collection, doc, getDoc, getDocs, setDoc, updateDoc } from 'firebase/firestore'
 import { db } from './Firebase/firebase'
 import { initalState } from './Redux/initalState';
+import { auth, provider } from './Firebase/firebase';
+import { signInWithPopup } from 'firebase/auth';
+import { arrayUnion } from 'firebase/firestore';
 
 const clientID = '286571261070-cjkoe7gk3mo32h375e6t43qla80k205u.apps.googleusercontent.com'
 
@@ -40,10 +43,8 @@ function App() {
 
   // // Firestore DB
   const [users, setUsers] = useState([])
-  const usersCollectionRef = collection(db, 'users')
-
   const navigate = useNavigate()
-  const userss = useSelector(state => state.users)
+  const usersCollectionRef = collection(db, 'users')
   const getUsers = async () => {
 
     const data = await getDocs(usersCollectionRef)
@@ -58,22 +59,24 @@ function App() {
   }, [])
 
   const createUser = async () => {
-    await addDoc(usersCollectionRef, { name: Math.random(), age: 66 })
+    let docRef = doc(db, 'users', 'NEW ID')
+    await setDoc(docRef, { email: 'EDITED' })
     dispatch({ type: REMOVE_LOADING_SCREEN })
     await getUsers()
   }
+
 
   // Google Auth
 
   useEffect(() => {
 
-    function start() {
-      gapi.client.init({
-        clientId: clientID,
-        scope: ''
-      })
-    }
-    gapi.load('client:auth2', start)
+    // function start() {
+    //   gapi.client.init({
+    //     clientId: clientID,
+    //     scope: ''
+    //   })
+    // }
+    // gapi.load('client:auth2', start)
 
   }, [])
 
@@ -130,20 +133,44 @@ function App() {
     }
   }, [health])
 
+  const [isEmailExistent, setIsEmailExistent] = useState(true)
+
+  // USERS ID
+  const userUID = useSelector(state => state.userUID)
+  // FIREBASE
+
+  const signInWithGoogle = () => {
+    signInWithPopup(auth, provider)
+      .then((res) => {
+        localStorage.setItem('isLoggedIn', true)
+        let docRef = doc(db, 'users', res.user.uid)
+        console.log(res)
+        setDoc(docRef, { email: res.user.email, name: res.user.displayName })
+        dispatch({type:'SET_USER_UID', payload: res.user.uid})
+        dispatch({type:SET_NAME, payload:res.user.displayName})
+        getUsers()
+        
+      })
+  }
+
+  
+
   return (
     <main className='w-screen bg-blue-500  relative  flex flex-col justify-start gap-4 items-center min-h-screen p-4  '>
       <Sidebar />
 
-
-      {
+      <button onClick={signInWithGoogle}>SIGN IN</button>
+      {/* {
         users.map((user) => {
           return <h2>{user.name}</h2>
         })
-      }
+      } */}
+
       <button onClick={() => createUser()
       }>Add User</button>
-      {/* <Login /> */}
-      {/* <Logout /> */}
+
+      <Login />
+      <Logout />
 
       {
         isLoading ? <Loading /> : ''

@@ -1,8 +1,11 @@
-import React from "react";
+import { addDoc, collection, doc, getDocs, setDoc, updateDoc } from "firebase/firestore";
+import React, { useState } from "react";
 import { useSelector } from "react-redux";
-
+import { useDispatch } from "react-redux";
 // Components
 import Habits from "./Components/HabitComponents/Habits";
+import { db } from "./Firebase/firebase";
+import { arrayUnion } from "firebase/firestore";
 
 export default function DisplayHabits() {
 
@@ -23,11 +26,38 @@ export default function DisplayHabits() {
     const Habit_List = useSelector(state => state.Habit_List)
     const Habit_Input_Value = useSelector(state => state.Habit_Input_Value)
 
+    // FIREBASE
+    // dispatch = useDispatch()
+    const [firebaseDB, setFirebaseDB] = useState(Daily_Task_List)
+    const usersCollectionRef = collection(db, 'users')
+    const userUID = useSelector(state => state.userUID)
+    const getData = async () => {
+        const data = await getDocs(usersCollectionRef)
+        let dataValue = data.docs.map((doc) => ({ ...doc.data() }))
+        console.log(dataValue[0].Daily_Task_List)
+        console.log(userUID)
+        await setDoc(doc(db, 'users', userUID), {
+            Daily_Task_List: { ...Daily_Task_List, }
+        })
+        setFirebaseDB(dataValue[0].Daily_Task)
+
+        // updateDoc(doc(db, 'users', userUID),
+        //     arrayUnion({ name: 'Lolara' })
+        // )
+    }
+
+
+
+
     return (
         <div className='flex justify-evenly gap-4 py-4 items-top ml-4 min-h-0 w-11/12  '>
+            <button onClick={getData}>Get Data</button>
+            <button onClick={() => {
+                useDispatch({ type: 'SET_DB_VALUE', payload: firebaseDB })
 
+            }}>Load</button>
             <Habits
-                
+
                 taskList={Habit_List}
                 taskName={'Habit'}
                 taskAction={Habit_Input_Value}

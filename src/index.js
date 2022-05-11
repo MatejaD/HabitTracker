@@ -24,6 +24,7 @@ import { firebaseReducer } from 'react-redux-firebase';
 const store = createStore(reducer, initalState)
 
 
+applyMiddleware(store)
 
 ReactDOM.render(
   <Provider store={store}>

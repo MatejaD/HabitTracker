@@ -11,9 +11,9 @@ export default function Login() {
     const dispatch = useDispatch()
 
     const onSuccess = (res) => {
-        
+
         console.log('LOGIN SUCCESS! Current user: ', res.profileObj)
-        dispatch({type:ADD_LOADING_SCREEN})
+        dispatch({ type: ADD_LOADING_SCREEN })
         dispatch({ type: SET_NAME, payload: res.profileObj.givenName })
         dispatch({ type: CLOSE_MODAL })
         dispatch({ type: SET_PROFILE_PIC, payload: res.profileObj.imageUrl })
@@ -27,7 +27,7 @@ export default function Login() {
 
 
     return (
-        <div id="signInButton">
+        <div id="signInButton" className="z-50">
             <GoogleLogin
                 clientId={clientID}
                 buttonText='Login'

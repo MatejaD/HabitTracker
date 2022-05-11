@@ -2,10 +2,11 @@
 
 export const initalState = {
     users: [],
-
+    userUID: '',
     name: '',
     profilePic: '',
-    isLoading: false,
+    isLoggedIn: false,
+    isLoading: true,
     modal: true,
     customizeCharacter: false,
     lvlUpModal: false,

@@ -3,15 +3,20 @@ import { OPEN_MODAL, CLOSE_MODAL, CHANGE_NAME, OPEN_CUSTOMIZE_CHARACTER, CLOSE_C
 
 const reducer = (state, action) => {
 
-    if (action.type === 'SET_DB') {
 
-        console.log(action.payload)
-        return { ...state, ...action.payload, name: 'YOYO' }
-
-    }
 
     if (action.type === CLOSE_MODAL) {
         return { ...state, modal: false }
+    }
+
+    if (action.type === 'SET_DB_VALUE') {
+
+        return { ...state, Daily_Task_List: action.paylod }
+    }
+
+    if (action.type === 'SET_USER_UID') {
+        console.log(state.userUID)
+        return { ...state, userUID: action.payload }
     }
 
     if (action.type === OPEN_MODAL) {

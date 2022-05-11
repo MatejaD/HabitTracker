@@ -8,6 +8,10 @@ import { AiOutlineArrowUp, AiOutlineArrowDown } from 'react-icons/ai'
 import { FaPlus, FaMinus } from 'react-icons/fa'
 import Overlay from "../Overlay";
 
+// FIREBASE
+import { doc, setDoc } from "firebase/firestore";
+import { db } from "../../Firebase/firebase";
+
 
 export default function Habits({ taskList, taskName, addItem, characterStat, placeHolder }) {
 
@@ -37,11 +41,15 @@ export default function Habits({ taskList, taskName, addItem, characterStat, pla
     ]
 
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault()
+        let docRef = doc(db, 'users', userUID)
         if (inputValue) {
             dispatch({ type: SET_TO_DO_VALUE, payload: inputValue, secondPayload: taskList })
             dispatch({ type: ADD_TO_LIST, payload: inputValue, list: taskList, listName: taskName })
+            if (taskList === Daily_Task_List) {
+                await setDoc(docRef, { Daily_Task_List: Daily_Task_List })
+            }
         }
         setInputValue('')
     }
@@ -93,6 +101,15 @@ export default function Habits({ taskList, taskName, addItem, characterStat, pla
     }
 
 
+    const userUID = useSelector(state => state.userUID)
+
+    useEffect(() => {
+        const saveHabits = async () => {
+            let docRef = doc(db, 'users', userUID)
+            await setDoc(docRef, { Daily_Task_List: Daily_Task_List, Habit_List: Habit_List, To_Do_List: To_Do_List })
+        }
+        saveHabits()
+    }, [userUID])
 
     // taskList --- To_Do_List
 
